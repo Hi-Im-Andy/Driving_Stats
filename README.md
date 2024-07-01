@@ -20,5 +20,9 @@ All vehicle types should have an average deceleration that would be sustainable 
 ## Speed
 This would be a simple indicator of how fast someone is going at any given time. Ideally, somwone should be going the speed limit +-10mph. The exception would be on the freeway where the speed limit is the speed of traffic. The speed should be compared over multiple trips and multiple distances. This would allow for a better understanding of someones driving habbits. Someone going 15 over the speed limit over the course of a few seconds is considerably less dangerous than someone going 15 over the speed limit consitently. 
 
+Could be used to calculate the average speed over or under the respecitve speed limit(s).
+Ex. 
+    Going between 3 different speed zones, 15mph, 30 mph, and 50mph. If the driver goes at 16mph, 32mph, and 33mph respectively, then the average speed limit difference would be +2mph. The larger the difference, the more dangerous a driver would be considered.
+
 ## Distance Traveled
 The distance traveled would be used as supplimentary data used to calculate the average speed as well as the drivers habits. Someone driving reclessly over a short distance is not as severe as someone driving reclessly over a longer trip. Additionally, gas usage can be stored and predictions can be made based off of the users driving habits and the distance they plan to travel.

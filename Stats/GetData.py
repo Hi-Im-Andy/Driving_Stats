@@ -8,8 +8,20 @@ __author__ = "Andy Hernandez"
 __data__ = "06-30-2024"
 __status__ = "Development"
 
+
+############################################################
+# Sngle Trip
+############################################################
+
+
+
+############################################################
+# All User Trips
+############################################################
+
 def get_all():
     print()
+
 
 def acceleration_comparison(car_type, acc_time):
     '''
@@ -23,6 +35,9 @@ def acceleration_comparison(car_type, acc_time):
         acc_delta (float): Acceleration difference for the given vehicle type and the given acceleration
     '''
     
+
+
+
 
 if (__name__ == "__main__"):
     get_all()
