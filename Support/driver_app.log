@@ -1,0 +1,4 @@
+01/07/2024 09:07:55: DEBUG    This is a debug message
+01/07/2024 09:07:55: INFO     This is an info message
+01/07/2024 09:07:55: WARNING  This is a warning message
+01/07/2024 09:07:55: ERROR    This is an error message
