@@ -3,8 +3,8 @@
 '''Outputs the useful data gathered by the on board device.'''
 
 import os
-from Stats import Visuals, awsDB
-from Support import Log, Driver
+from Stats import Visuals, LocalDB, AwsDB
+from Stats.Support import Log, Driver
 
 def add_driver():
     '''
@@ -28,4 +28,4 @@ if(__name__ == "__main__"):
     logger = Log.make_log()
     current_driver = Driver("John Smith", )
     logger.info(f"Main is running.")
-    awsDB.get_all()
+    AwsDB.get_all()

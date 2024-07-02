@@ -30,6 +30,7 @@ The distance traveled would be used as supplimentary data used to calculate the 
 
 ## AWS Database
 The databse on the AWS server holder 2 tables, one for the users and one for driving records.
+- https://realpython.com/python-mysql/
 
 
 ## Local Database

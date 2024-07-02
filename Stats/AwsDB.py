@@ -10,10 +10,6 @@ __data__ = "06-30-2024"
 __status__ = "Development"
 
 
-############################################################
-# All User Trips
-############################################################
-# All user trips should be stored on the aws mysql database
 def create_aws_db():
     with connect(
         host = input("Host: "),
@@ -50,13 +46,22 @@ def create_tables():
     with connection.cursor() as cursor:
         cursor.execute(create_users_query)
         connection.commit()
-
+    # 
     create_driving_record = """
     CREATE TABLE driving_record (
         id INT AUTO_INCREMENT PRIMARY KEY,
+        driver VARCHAR(100),
+        license VARCHAR(100),
         date DATE,
-        time TIME,
-        
+        time_span TIME,
+        max_speed FLOAT,
+        average_speed FLOAT,
+        max_acceleration FLOAT,
+        average_acceleration FLOAT,
+        Min_decceleration Float,
+        average_decceleration FLOAT,
+        warnings INT,
+        violations INT
     )
     """
 
@@ -82,3 +87,5 @@ if (__name__ == "__main__"):
         #connect_aws_db()
     except Error as e:
         print(e)
+
+
