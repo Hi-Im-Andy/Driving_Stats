@@ -4,8 +4,10 @@
 Used to get metrics from the data (average speed, max acceleration, etc).
 '''
 
+from datetime import datetime
 import Stats.AwsDB as AwsDB
 import Stats.LocalDB as localDB
+
 
 __author__ = "Andy Hernandez"
 __date__ = "6/30/2024"
@@ -46,3 +48,6 @@ def max_speed(lic):
     max = max(data)
     return max
 
+def upload():
+    date = datetime.strftime("%m/%d/%Y")
+    print()
