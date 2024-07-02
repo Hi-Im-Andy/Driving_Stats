@@ -4,11 +4,12 @@
 Used to get metrics from the data (average speed, max acceleration, etc).
 '''
 
-import GetData
-import Visuals
+import Stats.AwsDB as AwsDB
+import Stats.LocalDB as localDB
 
 __author__ = "Andy Hernandez"
 __date__ = "6/30/2024"
+__status__ = "Development"
 
 
 def average_speed(lic):
@@ -24,7 +25,7 @@ def average_speed(lic):
     query = '''
     GET * FROM Speed WHERE User_ID = ?
     '''
-    data = GetData.get_data(query, lic)
+    data = AwsDB.get_data(query, lic)
     avg = sum(data) / len(data)
     return avg
 
@@ -39,10 +40,9 @@ def max_speed(lic):
         max (float): The maximum speed traveled in mph over the given trip
     '''
     query = '''
-    GET * FROM Speed WHERE User_ID = ?
+    GET * FROM Trip
     '''
-    data = GetData.get_data(query, lic)
+    data = localDB.get_data(query, lic)
     max = max(data)
     return max
 
-    

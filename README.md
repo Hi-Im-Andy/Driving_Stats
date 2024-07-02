@@ -26,3 +26,12 @@ Ex.
 
 ## Distance Traveled
 The distance traveled would be used as supplimentary data used to calculate the average speed as well as the drivers habits. Someone driving reclessly over a short distance is not as severe as someone driving reclessly over a longer trip. Additionally, gas usage can be stored and predictions can be made based off of the users driving habits and the distance they plan to travel.
+
+
+## AWS Database
+The databse on the AWS server holder 2 tables, one for the users and one for driving records.
+
+
+## Local Database
+The local database is a sqlite database that is used to store the most recent driving record before it is analyzed and sent to the aws database.
+Storing it locally allows for the program to run even if there is no connection to the aws server.
