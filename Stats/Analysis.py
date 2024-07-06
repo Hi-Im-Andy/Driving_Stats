@@ -5,49 +5,66 @@ Used to get metrics from the data (average speed, max acceleration, etc).
 '''
 
 from datetime import datetime
-import Stats.AwsDB as AwsDB
-import Stats.LocalDB as localDB
+import AwsDB as AwsDB
+import LocalDB as localDB
 
 
 __author__ = "Andy Hernandez"
 __date__ = "6/30/2024"
 __status__ = "Development"
 
-
-def average_speed(lic):
+##############################################################
+# Speed
+##############################################################
+def average_speed():
     '''
     Gets the average speed of the latest trip and returns it.
 
     Args:
-        lic (str): The license associated with the driver whose speed we are looking for
+        None
 
     Returns:
         avg (float): The average speed traveled in mph over the given trip.
     '''
-    query = '''
-    GET * FROM Speed WHERE User_ID = ?
-    '''
-    data = AwsDB.get_data(query, lic)
-    avg = sum(data) / len(data)
+    speed_tup = localDB.get_speed()
+    speed = [value[0] for value in speed_tup]
+    avg = float(sum(speed) / len(speed))
     return avg
 
-def max_speed(lic):
+def max_speed():
     '''
     Gets the maximum speed of the latest trip and returns it.
 
     Args:
-        lic (str): The license associated with the driver whose max speed we are looking for
+        None
     
     Returns:
-        max (float): The maximum speed traveled in mph over the given trip
+        max_speed (float): The maximum speed traveled in mph over the given trip
     '''
-    query = '''
-    GET * FROM Trip
-    '''
-    data = localDB.get_data(query, lic)
-    max = max(data)
-    return max
+    speed_tup = localDB.get_speed()
+    speed = [value[0] for value in speed_tup]
+    max_speed = max(speed)
+    return max_speed
 
+
+##############################################################
+# Acceleration and Decceleration
+##############################################################
+def acceleration():
+    
+    print()
+
+def decceleration():
+    print()
+
+
+##############################################################
+# Uploading
+##############################################################
 def upload():
     date = datetime.strftime("%m/%d/%Y")
     print()
+
+if (__name__ == "__main__"):
+    print("Average Speed: " + str(average_speed()))
+    print("Max Speed: " + str(max_speed()))

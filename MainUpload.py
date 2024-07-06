@@ -1,0 +1,1 @@
+# Simulates the device that would be uploading the data (phone or on board device in the vehicle)

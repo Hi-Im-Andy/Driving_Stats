@@ -48,7 +48,7 @@ def create_tables():
         connection.commit()
     # 
     create_driving_record = """
-    CREATE TABLE driving_record (
+    CREATE TABLE IF NOT EXISTS driving_record (
         id INT AUTO_INCREMENT PRIMARY KEY,
         driver VARCHAR(100),
         license VARCHAR(100),
