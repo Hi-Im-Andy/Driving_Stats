@@ -50,12 +50,63 @@ def max_speed():
 ##############################################################
 # Acceleration and Decceleration
 ##############################################################
-def acceleration():
-    
-    print()
+def max_acceleration():
+    '''
+    Gets the maximum acceleration of the latest trip taken.
 
-def decceleration():
-    print()
+    Args:
+        None
+    Returns:
+        max_acc (float): The maximum acceleration in mph/s over the given trip.
+    '''
+    acc_tup = localDB.get_acceleration()
+    acc = [value[0] for value in acc_tup]
+    max_acc = max(acc)
+    return max_acc
+
+def min_decceleration():
+    '''
+    Gets the minimumum decceleraion (quickest breaking time) of the latest trip taken.
+    
+    Args:
+        None
+    Returns:
+        min_dec (float): The minimum decceleration in mph/s over the given trip.
+    '''
+    dec_tup = localDB.get_decceleration()
+    dec = [value[0] for value in dec_tup]
+    min_dec = min(dec)
+    return min_dec
+
+def avg_acceleration():
+    '''
+    Gets the average acceleration time over the course of the trip.
+
+    Args:
+        None
+    
+    Returns:
+        avg_acc (float): The average acceleration in mph/s over the given trip.
+    '''
+    acc_tup = localDB.get_acceleration()
+    acc = [value[0] for value in acc_tup]
+    avg_acc = float(sum(acc) / len(acc))
+    return avg_acc
+
+def avg_decceleration():
+    '''
+    Gets the average decceleration time over the course of the tip.
+
+    Args:
+        None
+
+    Returns:
+        avg_dec (float): The average decceleration in mph/s over the given trip.
+    '''
+    dec_tup = localDB.get_acceleration()
+    dec = [value[0] for value in dec_tup]
+    avg_dec = float(sum(dec) / len(dec))
+    return avg_dec
 
 
 ##############################################################

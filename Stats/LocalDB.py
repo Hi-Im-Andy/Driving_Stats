@@ -26,6 +26,12 @@ def create_database():
     )
     ''')
 
+def delete():
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("DROP TABLE trip")
+
+
 # Should only take in the acceleration, then output a single number based on acc or dec
 def format(latitude, longitude, limit, speed, acceleration, decceleration):
     '''Formats the data for the database.'''
@@ -69,10 +75,17 @@ def get_speed():
     c.execute("SELECT speed FROM trip")
     return c.fetchall()
 
-def delete():
+def get_acceleration():
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
-    c.execute("DROP TABLE trip")
+    c.execute("SELECT acceleration FROM trip")
+    return c.fetchall()
+
+def get_decceleration():
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT decceleration FROM trip")
+    return c.fetchall()
 
 
 if (__name__ == "__main__"):
