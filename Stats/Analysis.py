@@ -110,11 +110,17 @@ def avg_decceleration():
 
 
 ##############################################################
-# Uploading
+# Warning and Violation
 ##############################################################
-def upload():
-    date = datetime.strftime("%m/%d/%Y")
+def warning():
+    '''
+    
+    '''
     print()
+
+def violation():
+    print()
+
 
 if (__name__ == "__main__"):
     print("Average Speed: " + str(average_speed()))

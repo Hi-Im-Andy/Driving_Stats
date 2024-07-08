@@ -3,19 +3,52 @@ import time
 import random
 from Stats import LocalDB as ldb
 from Stats import AwsDB as adb
+from Stats import Analysis
 
-def upload_to_aws(trip_data):
-    # Get average acceleration
-    # Get max acceleration
-    # Get min acceleration
-    # Get average speed
-    # Get max speed
+def upload_to_aws():
+    '''
+    Takes the data from the local database, analyzes it, and uploads it to the aws database.
+
+    Args:
+        None
+
+    Returns:
+        None
+    '''
+    # Basic upload info
+    driver = "John Smith"
+    license = "Y123456"
+    date = "01/01/2024"
+    time_span = "100"
+
+    # Run analysis on data to get summed up info
+    avg_speed = Analysis.average_speed()
+    avg_acc = Analysis.avg_acceleration()
+    avg_dec = Analysis.avg_decceleration()
+    max_speed = Analysis.max_speed()
+    max_acc = Analysis.max_acceleration()
+    min_dec = Analysis.min_decceleration()
+    
+    warnings = Analysis.warnings()
+    violations = Analysis.violations()
+
 
     # Format
-
     # upload to aws
-
-    print()
+    adb.upload(
+        driver, 
+        license, 
+        date, 
+        time_span, 
+        max_speed, 
+        avg_speed, 
+        max_acc, 
+        avg_acc, 
+        min_dec, 
+        avg_dec, 
+        warnings, 
+        violations
+    )
 
 def sample_run():
     time_start = time.time()
@@ -26,9 +59,9 @@ def sample_run():
     out = ldb.format(0, 0, 0, 0, 0, 0)
     ldb.upload(out)
     time.sleep(1)
+    
+    # Simulating a striaght drive with variable change in position/speed/acceleration 
     while(time.time() - time_start < 60):
-
-        # Simulating a striaght drive with variable change in position/speed/acceleration 
         longitude += (0.00001 * random.randrange(9)) 
         latitude += 0.00001
         speed = ldb.set_speed(latitude, longitude, 1)
@@ -42,7 +75,7 @@ def main():
 
     # upload_to_aws
     ldb.print_all()
-    ldb.delete()
+    # ldb.delete()
         
         
 
