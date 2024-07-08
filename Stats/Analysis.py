@@ -112,14 +112,45 @@ def avg_decceleration():
 ##############################################################
 # Warning and Violation
 ##############################################################
-def warning():
+def warnings():
     '''
-    
+    Reads all of the data and notifies the driver of possible recklessness
+
+    Args:
+        None
+
+    Returns:
+        warnings (int): The number of times that the driver was being reckless
     '''
+    # group data by speed limit
+    # If the average speed over set speed limit is +-5mph
+        # Add warning
+    # Check all data, if an data point is +-10mph speed limit
+    # and the neighbors are not
+    # Add a warning 
     print()
 
-def violation():
+
+
+def violations():
+    '''
+    Reads all of the data and returns the amount of times the driver was significantly reckless
+
+    Args:
+        None
+
+    Returns:
+        violations (int): The number of times that a driver was significantly reckless
+    '''
+    # group data by speed limit
+    # If the average speed over set speed limit is +-10mph
+        # Add warning
+    # Check all data, if an data point is +-10mph speed limit
+    # and either neighbor is also over
+    # Add a violation
+    
     print()
+    
 
 
 if (__name__ == "__main__"):

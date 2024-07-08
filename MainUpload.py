@@ -18,7 +18,6 @@ def upload_to_aws():
     # Basic upload info
     driver = "John Smith"
     license = "Y123456"
-    date = "01/01/2024"
     time_span = "100"
 
     # Run analysis on data to get summed up info
@@ -32,13 +31,10 @@ def upload_to_aws():
     warnings = Analysis.warnings()
     violations = Analysis.violations()
 
-
     # Format
-    # upload to aws
-    adb.upload(
+    data = adb.format(
         driver, 
         license, 
-        date, 
         time_span, 
         max_speed, 
         avg_speed, 
@@ -49,6 +45,9 @@ def upload_to_aws():
         warnings, 
         violations
     )
+
+    # upload to aws
+    adb.upload(data)
 
 def sample_run():
     time_start = time.time()
