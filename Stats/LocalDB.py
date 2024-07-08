@@ -26,6 +26,7 @@ def create_database():
     )
     ''')
 
+# Should only take in the acceleration, then output a single number based on acc or dec
 def format(latitude, longitude, limit, speed, acceleration, decceleration):
     '''Formats the data for the database.'''
     date_format = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
@@ -46,6 +47,11 @@ def get_all():
     c.execute("SELECT * FROM trip")
     return c.fetchall()
 
+def print_all():
+    data = get_all()
+    for row in data:
+        print(row)
+
 def set_speed(latitude, longitude, interval):
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
@@ -55,9 +61,7 @@ def set_speed(latitude, longitude, interval):
     lat1, lon1 = last
     distance = math.sqrt(((latitude-lat1)**2) + ((longitude-lon1)**2))
     speed = float(distance / interval)
-    print(speed)
     return speed
-
 
 def get_speed():
     conn = sqlite3.connect("database.db")
@@ -65,7 +69,7 @@ def get_speed():
     c.execute("SELECT speed FROM trip")
     return c.fetchall()
 
-def delete_db():
+def delete():
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute("DROP TABLE trip")
