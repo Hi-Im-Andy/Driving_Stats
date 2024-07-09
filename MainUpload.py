@@ -4,6 +4,7 @@ from Stats.Support import Log, Driver
 from Stats import LocalDB as ldb
 from Stats import AwsDB as adb
 from Stats import Analysis
+from Upload import Device as dvc
 
 
 def upload_to_aws():
@@ -75,6 +76,33 @@ def sample_run():
         speed = ldb.set_speed(latitude, longitude, 1)
         acceleration = ldb.set_acceleration(speed, 1)
         out = ldb.format(latitude, longitude, 0, speed, acceleration)
+        ldb.upload(out)
+        time.sleep(1)
+
+def run():
+    '''
+    Gets the data from a device and updates the local database
+
+    Args:
+        None
+
+    Returns:
+        None
+    '''
+    # Getting the starting parameters 
+    longitude, latitude = dvc.get_position()
+    out = ldb.format(longitude, latitude, 0, 0, 0)
+    ldb.upload(out)
+    time.sleep(1)
+
+    # The True conditional needs to be linked to something like a button press if a UI is made
+    # Updates the database with new entries in 1 second intervals
+    while(True):
+        longitude, latitude = dvc.get_position()
+        speed_limit = dvc.get_limit()
+        speed = ldb.set_speed(latitude, longitude, 1)
+        acceleration = ldb.set_acceleration(speed, 1)
+        out = ldb.format(latitude, longitude, speed_limit, speed, acceleration)
         ldb.upload(out)
         time.sleep(1)
 
