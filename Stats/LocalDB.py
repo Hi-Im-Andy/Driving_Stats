@@ -46,16 +46,20 @@ def get_all():
     c.execute("SELECT * FROM trip")
     return c.fetchall()
 
+
 def set_speed(latitude, longitude, interval):
+    
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute("SELECT latitude, longitude FROM trip ORDER BY time DESC LIMIT 1")
     last = c.fetchone()
     conn.close()
     lat1, lon1 = last
-    distance = math.sqrt(((latitude-lat1)**2) + ((longitude-lon1)**2))
-    speed = float(distance / interval)
-    print(speed)
+    # Converting longitude/latitude per second to meters per hour then feet per second
+    lat1, lon1, latitude, longitude = math.radians(lat1), math.radians(lon1), math.radians(latitude), math.radians(longitude)
+    distance = 6371 * math.sqrt(((latitude-lat1)**2) + ((longitude-lon1)**2))
+    speed = float(distance / interval * 3600)
+    speed = speed * 0.911344416
     return speed
 
 
