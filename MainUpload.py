@@ -1,10 +1,19 @@
-# Simulates the device that would be uploading the data (phone or on board device in the vehicle)
+#!/bin/env python3
+
+'''
+Gathers and uploads the driving data.
+'''
+
 import time, sys, random
 from Stats.Support import Log, Driver
 from Stats import LocalDB as ldb
 from Stats import AwsDB as adb
 from Stats import Analysis
 from Upload import Device as dvc
+
+__author__ = "Andy Hernandez"
+__date__ = "7/9/2024"
+__status__ = "Development"
 
 
 def upload_to_aws():
