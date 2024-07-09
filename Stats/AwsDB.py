@@ -10,6 +10,9 @@ __data__ = "06-30-2024"
 __status__ = "Development"
 
 
+##############################################################
+# Connection and creation of AWS table
+##############################################################
 def create_aws_db():
     with connect(
         host = input("Host: "),

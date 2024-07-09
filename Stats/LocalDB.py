@@ -10,6 +10,10 @@ __author__ = "Andy Hernandez"
 __date__ = "07/02/2024"
 __status__ = "Development"
 
+
+##############################################################
+# Create, delete, and other basic functions
+##############################################################
 def create_database():
     '''
     Creates the database and tables for the program to use
@@ -49,7 +53,6 @@ def delete():
     c.execute("DROP TABLE trip")
 
 
-# Should only take in the acceleration, then output a single number based on acc or dec
 def format(latitude, longitude, limit, speed, acceleration):
     '''
     Formats the data into a list that can be used in a query
@@ -120,6 +123,10 @@ def print_all():
     for row in data:
         print(row)
 
+
+##############################################################
+# Speed and acceleration
+##############################################################
 def set_speed(latitude, longitude, interval):
     '''
     Calculates the current speed based off of the distance traveled over an interval
@@ -210,15 +217,4 @@ def get_decceleration():
 
 
 if (__name__ == "__main__"):
-    # create_database()
-    # i = 0
-    # while (i < 100):
-    #     data = format(1, 2, 3, 4, 5, 6)
-    #     upload(data)
-    #     time.sleep(1)
-    #     i += 1
-    # speed = get_speed()
-    # speed = [value[0] for value in speed]
-    # print(max(speed))
-    # print((sum(speed))/len(speed))
     set_speed(2,4,1)

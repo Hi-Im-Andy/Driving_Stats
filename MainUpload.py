@@ -1,9 +1,10 @@
 # Simulates the device that would be uploading the data (phone or on board device in the vehicle)
-import time
-import random
+import time, sys, random
+from Stats.Support import Log
 from Stats import LocalDB as ldb
 from Stats import AwsDB as adb
 from Stats import Analysis
+
 
 def upload_to_aws():
     '''
@@ -46,10 +47,19 @@ def upload_to_aws():
         violations
     )
 
-    # upload to aws
+    # Upload to aws
     adb.upload(data)
 
 def sample_run():
+    '''
+    Simulates a straight drive with changes in speed and updates the local database
+
+    Args:
+        None
+
+    Returns:
+        None
+    '''
     time_start = time.time()
 
     longitude = 0
@@ -59,7 +69,6 @@ def sample_run():
     ldb.upload(out)
     time.sleep(1)
     
-    # Simulating a striaght drive with variable change in position/speed/acceleration 
     while(time.time() - time_start < 60):
         longitude += (0.00001 * random.randrange(9)) 
         latitude += 0.00001
@@ -70,14 +79,26 @@ def sample_run():
         time.sleep(1)
 
 def main():
-    ldb.create_database()
-    sample_run()
+    '''
+    The runs the data gathering and uploads the data to aws
 
-    # upload_to_aws
-    ldb.print_all()
-    # ldb.delete()
-        
-        
+    Args:
+        None
+
+    Returns:
+        None
+    '''
+    logger = Log.make_log()
+    logger.info("Starting data collection")
+    try:
+        ldb.create_database()
+        sample_run()
+        # upload_to_aws
+        ldb.print_all()
+        ldb.delete()
+    except Exception as e:
+        logger.error(f"Error occured during main upload: {e}")
+        sys.exit(f"Error occured during main upload: {e}")
 
 if (__name__ == "__main__"):
     main()

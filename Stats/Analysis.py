@@ -4,10 +4,7 @@
 Used to get metrics from the data (average speed, max acceleration, etc).
 '''
 
-from datetime import datetime
-# import AwsDB as adb
 import Stats.LocalDB as localDB
-
 
 __author__ = "Andy Hernandez"
 __date__ = "6/30/2024"
@@ -88,6 +85,7 @@ def avg_acceleration():
     Returns:
         avg_acc (float): The average acceleration in mph/s over the given trip.
     '''
+    # Need to remove the 0 values to stop it from scewing
     acc_tup = localDB.get_acceleration()
     acc = [value[0] for value in acc_tup]
     avg_acc = float(sum(acc) / len(acc))
@@ -150,8 +148,45 @@ def violations():
     # Add a violation
     
     print()
-    
 
+##############################################################
+# Comparisons
+##############################################################
+def acceleration_comparison(car_type, acc_time):
+    '''
+    Compares the input car type and average acceleration and returns the delta from average.
+    
+    Args:
+        car_type (str): The car type determines what time should be compared
+        acc_time (float): Given acceleration for the trip that will be compared to the overall average
+
+    Returns:
+        acc_delta (float): Acceleration difference for the given vehicle type and the given acceleration
+    '''
+    # Query the local database for the all of the accelerations
+    # Keep only the accelerations after a speed == 0 for x number of seconds
+    # All of those accelerations should be averaged
+    # Compare the given acceleration to the average acceleration
+    print()
+
+def decceleration_comparison(car_types, dec_time):
+    '''
+    Compares the input car type average decceleration and returns the delta from average.
+
+    Args:
+        car_type (str): The car type determines what time should be compared
+        dec_time (float): Given decceleration for the trip that will be compared to the overall average
+
+    Returns:
+        dec_delta (float): Decceleration difference for the given vehicle type and the given decceleration
+    
+    '''
+    # Query the local database for the all of the deccelerations
+    # Keep onlt the deccelerations before any speed == 0 for x number of seconds prior
+    # All of those deccelerations should be averaged
+    # Compare the given decceleration to the average decceleration
+
+    print()
 
 if (__name__ == "__main__"):
     print("Average Speed: " + str(average_speed()))
