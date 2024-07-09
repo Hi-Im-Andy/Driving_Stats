@@ -50,7 +50,7 @@ def delete():
 
 
 # Should only take in the acceleration, then output a single number based on acc or dec
-def format(latitude, longitude, limit, speed, acceleration, decceleration):
+def format(latitude, longitude, limit, speed, acceleration):
     '''
     Formats the data into a list that can be used in a query
 
@@ -65,6 +65,12 @@ def format(latitude, longitude, limit, speed, acceleration, decceleration):
     Returns:
         data (list): The ordered arguments along with the current time.
     '''
+    if (acceleration < 0):
+        decceleration = acceleration
+        acceleration = 0
+    else:
+        decceleration = 0
+        
     date_format = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
     data = [date_format, latitude, longitude, speed, limit, acceleration, decceleration]
     return data
@@ -132,9 +138,30 @@ def set_speed(latitude, longitude, interval):
     last = c.fetchone()
     conn.close()
     lat1, lon1 = last
-    distance = math.sqrt(((latitude-lat1)**2) + ((longitude-lon1)**2))
-    speed = float(distance / interval)
+    lat1, lon1, latitude, longitude = math.radians(lat1), math.radians(lon1), math.radians(latitude), math.radians(longitude)
+    distance = 6371 * math.sqrt(((latitude-lat1)**2) + ((longitude-lon1)**2))
+    speed = float(distance / interval * 3600)
+    speed = speed * 0.911344416 * 0.68181818
     return speed
+
+def set_acceleration(speed, interval):
+    '''
+    Calculates the current acceleration or decceleration based off of the change of speed in the last interval
+
+    Args:
+        speed (float): The speed in miles per hour of the current input
+        interval(int): The interval in seconds
+
+    Returns:
+        acceleration (flaot): The change in speed in miles per hour per second
+    '''
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT speed FROM trip ORDER BY time DESC LIMIT 1")
+    prev_speed = c.fetchone()
+    conn.close()
+    acceleration = (speed - prev_speed[0]) / interval
+    return acceleration
 
 def get_speed():
     '''

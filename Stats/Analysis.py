@@ -5,8 +5,8 @@ Used to get metrics from the data (average speed, max acceleration, etc).
 '''
 
 from datetime import datetime
-import AwsDB as AwsDB
-import LocalDB as localDB
+# import AwsDB as adb
+import Stats.LocalDB as localDB
 
 
 __author__ = "Andy Hernandez"

@@ -55,7 +55,7 @@ def sample_run():
     longitude = 0
     latitude = 0
 
-    out = ldb.format(0, 0, 0, 0, 0, 0)
+    out = ldb.format(0, 0, 0, 0, 0)
     ldb.upload(out)
     time.sleep(1)
     
@@ -64,7 +64,8 @@ def sample_run():
         longitude += (0.00001 * random.randrange(9)) 
         latitude += 0.00001
         speed = ldb.set_speed(latitude, longitude, 1)
-        out = ldb.format(latitude, longitude, 0, speed, 0, 0)
+        acceleration = ldb.set_acceleration(speed, 1)
+        out = ldb.format(latitude, longitude, 0, speed, acceleration)
         ldb.upload(out)
         time.sleep(1)
 
