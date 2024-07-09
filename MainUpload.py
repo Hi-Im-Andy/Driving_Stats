@@ -1,6 +1,6 @@
 # Simulates the device that would be uploading the data (phone or on board device in the vehicle)
 import time, sys, random
-from Stats.Support import Log
+from Stats.Support import Log, Driver
 from Stats import LocalDB as ldb
 from Stats import AwsDB as adb
 from Stats import Analysis
@@ -20,6 +20,7 @@ def upload_to_aws():
     driver = "John Smith"
     license = "Y123456"
     time_span = "100"
+    new_driver = Driver(driver, 30, "Male", license, "SUV")
 
     # Run analysis on data to get summed up info
     avg_speed = Analysis.average_speed()
@@ -34,8 +35,7 @@ def upload_to_aws():
 
     # Format
     data = adb.format(
-        driver, 
-        license, 
+        new_driver, 
         time_span, 
         max_speed, 
         avg_speed, 

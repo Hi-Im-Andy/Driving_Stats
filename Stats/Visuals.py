@@ -8,7 +8,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-
+##############################################################
+# Trip Visuals
+##############################################################
 def display_speed(speed):
     '''
     Graphs the speed of the trip with speed vs time
@@ -90,4 +92,20 @@ def overlay(speed, speed_limit, max_acc_point, min_dec_point):
         None
     '''
     print()
-    
+
+
+##############################################################
+# AWS Visuals
+##############################################################
+def speed_compare(speed1, speed2):
+    '''
+    Graphs the speed of two trips against one another
+
+    Args:
+        speed1 (list): The list of speeds for the first trip
+        speed2 (list): The list of speeds for the second trip
+
+    Returns:
+        None
+    '''
+    print()

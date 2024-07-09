@@ -4,6 +4,7 @@
 
 from mysql.connector import connect, Error
 from getpass import getpass
+from datetime import datetime
 
 __author__ = "Andy Hernandez"
 __data__ = "06-30-2024"
@@ -37,7 +38,7 @@ def connect_aws_db():
 def create_tables():
     connection = connect_aws_db()
     create_users_query = """
-    CREATE TABLE users (
+    CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(100) NOT NULL,
         age INT,
@@ -66,21 +67,66 @@ def create_tables():
         warnings INT,
         violations INT
     )
-    """
+    """ 
+    with connection.cursor() as cursor:
+        cursor.execute(create_driving_record)
+        connection.commit()
+        connection.close()
 
-def acceleration_comparison(car_type, acc_time):
+##############################################################
+# Uploads
+##############################################################
+def format(driver, time_span, max_speed, avg_speed, max_acc, avg_acc, min_dec, warnings, violations):
     '''
-    Compares the input car type and average acceleration and returns the delta from average.
-    
+    Places all of the input arguments into a list to prepare them for the query
+
     Args:
-        car_type (str): The car type determines what time should be compared
-        acc_time (float): Given acceleration for the trip that will be compared to the overall average
+        driver (class): The class with the drivers information
+        time_span (str): The time span of the trip
+        max_speed (float): The maximum speed of the trip
+        avg_speed (float): The average speed of the trip
+        max_acc (float): The maximum acceleration of the trip
+        avg_acc (float): The average acceleration of the trip
+        min_dec (float): The minimum deceleration of the trip
+        warnings (int): The number of warnings the driver received during the trip
+        violations (int): The number of violations the driver received during the trip
+    
+    Returns:
+        data (list): The list of the ordered inputs
+    '''
+    date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
+    data = [
+        driver.name, 
+        driver.license,
+        date, 
+        time_span, 
+        max_speed, 
+        avg_speed, 
+        max_acc,
+        avg_acc,
+        min_dec,
+        warnings,
+        violations
+    ]
+    return data
+
+def upload(data):
+    '''
+    Uploads the analyzed trip data to the aws database
+
+    Args:
+        data (list): The formatted inputs for the insert query
 
     Returns:
-        acc_delta (float): Acceleration difference for the given vehicle type and the given acceleration
+        None
     '''
-    
+    connection = connect_aws_db()
+    with connection.cursor() as cursor:
+        cursor.execute("INSERT INTO driving_record (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
+        connection.commit()
+        connection.close()
 
+# Should add the option to upload the trip data from the local db
 
 
 
