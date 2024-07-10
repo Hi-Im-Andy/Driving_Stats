@@ -74,11 +74,15 @@ class Driver:
         # https://roads.googleapis.com/v1/speedLimits?path=38.75807927603043,-9.03741754643809&key='api key'
         # url = f"https://roads.googleapis.com/v1/speedLimits?path={self.latitude},{self.longitude}&key={self.api_key}"
         url = f"https://roads.googleapis.com/v1/speedLimits?path={self.latitude},{self.longitude} &units=MPH &key={self.api_key}"
+        # response = requests.get(url).json()
         # response = requests.get(url)
         # Print the response
         # response_json = response.json()
         # print(response_json)
-        
+        # or
+        # maps = googlemaps.Client(key=self.api_key)
+        # response = maps.speed_limit(self.latitude, self.longitude, units = MPH)
+        # 
         # Get request in json format and parse to speed limit
         
         self.speed_limit = 0
