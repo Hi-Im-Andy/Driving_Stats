@@ -127,13 +127,31 @@ def print_all():
 ##############################################################
 # Speed and acceleration
 ##############################################################
-def set_speed(latitude, longitude, interval):
+def set_speed(driver, interval):
     '''
     Calculates the current speed based off of the distance traveled over an interval
 
     Args:
-        latitude (float): The latitude of the current position
-        longitude (float): The longitude of the current position
+        driver (Driver): The driver that is currently driving and their information
+        interval (int): The interval in seconds
+    
+    Returns:
+        speed (float): The speed in miles per hour
+    '''
+    lat1, lon1 = driver.get_location()
+    longitude, latitude = driver.update_location()
+    lat1, lon1, latitude, longitude = math.radians(lat1), math.radians(lon1), math.radians(latitude), math.radians(longitude)
+    distance = 6371 * math.sqrt(((latitude-lat1)**2) + ((longitude-lon1)**2))
+    speed = float(distance / interval * 3600)
+    speed = speed * 0.911344416 * 0.68181818
+    return speed
+
+def set_speed_sample(longitude, latitude, interval):
+    '''
+    Calculates the sample speed over an interval
+
+    Args:
+        driver (Driver): The driver that is currently driving and their information
         interval (int): The interval in seconds
     
     Returns:
@@ -142,9 +160,9 @@ def set_speed(latitude, longitude, interval):
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute("SELECT latitude, longitude FROM trip ORDER BY time DESC LIMIT 1")
-    last = c.fetchone()
+    prev = c.fetchone()
     conn.close()
-    lat1, lon1 = last
+    lat1, lon1 = prev
     lat1, lon1, latitude, longitude = math.radians(lat1), math.radians(lon1), math.radians(latitude), math.radians(longitude)
     distance = 6371 * math.sqrt(((latitude-lat1)**2) + ((longitude-lon1)**2))
     speed = float(distance / interval * 3600)

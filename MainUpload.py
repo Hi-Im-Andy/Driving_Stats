@@ -5,18 +5,18 @@ Gathers and uploads the driving data.
 '''
 
 import time, sys, random
-from Stats.Support import Log, Driver
+from Stats.Support import Log
+from Stats.Support.Driver import Driver
 from Stats import LocalDB as ldb
 from Stats import AwsDB as adb
 from Stats import Analysis
-from Upload import Device as dvc
 
 __author__ = "Andy Hernandez"
 __date__ = "7/9/2024"
 __status__ = "Development"
 
 
-def upload_to_aws():
+def upload_to_aws(driver):
     '''
     Takes the data from the local database, analyzes it, and uploads it to the aws database.
 
@@ -27,10 +27,7 @@ def upload_to_aws():
         None
     '''
     # Basic upload info
-    driver = "John Smith"
-    license = "Y123456"
     time_span = "100"
-    new_driver = Driver(driver, 30, "Male", license, "SUV")
 
     # Run analysis on data to get summed up info
     avg_speed = Analysis.average_speed()
@@ -45,7 +42,7 @@ def upload_to_aws():
 
     # Format
     data = adb.format(
-        new_driver, 
+        driver, 
         time_span, 
         max_speed, 
         avg_speed, 
@@ -82,38 +79,42 @@ def sample_run():
     while(time.time() - time_start < 60):
         longitude += (0.00001 * random.randrange(9)) 
         latitude += 0.00001
-        speed = ldb.set_speed(latitude, longitude, 1)
+        speed = ldb.set_speed_sample(latitude, longitude, 1)
         acceleration = ldb.set_acceleration(speed, 1)
         out = ldb.format(latitude, longitude, 0, speed, acceleration)
         ldb.upload(out)
         time.sleep(1)
 
-def run():
+def run(driver):
     '''
     Gets the data from a device and updates the local database
 
     Args:
-        None
+        driver (Driver): The current person driving and their information.
 
     Returns:
         None
     '''
     # Getting the starting parameters 
-    longitude, latitude = dvc.get_position()
+    longitude, latitude = driver.update_location()
     out = ldb.format(longitude, latitude, 0, 0, 0)
     ldb.upload(out)
-    time.sleep(1)
+    interval = 1
+    time.sleep(interval)
 
     # The True conditional needs to be linked to something like a button press if a UI is made
     # Updates the database with new entries in 1 second intervals
-    while(True):
-        longitude, latitude = dvc.get_position()
-        speed_limit = dvc.get_limit()
-        speed = ldb.set_speed(latitude, longitude, 1)
-        acceleration = ldb.set_acceleration(speed, 1)
-        out = ldb.format(latitude, longitude, speed_limit, speed, acceleration)
-        ldb.upload(out)
-        time.sleep(1)
+    # while(True):
+    i = 0
+    while (i <= 60):
+        i += 1
+        speed = ldb.set_speed(driver, 1)
+        acceleration = ldb.set_acceleration(speed, interval)
+        longitude, latitude = driver.get_location()
+        data = ldb.format(latitude, longitude, driver.get_speed_limit(), speed, acceleration)
+        ldb.upload(data)
+        time.sleep(interval)
+
 
 def main():
     '''
@@ -127,10 +128,17 @@ def main():
     '''
     logger = Log.make_log()
     logger.info("Starting data collection")
+    
+    # Creating driver
+    driver = "John Smith"
+    license = "Y123456"
+    driver = Driver(driver, 30, "Male", license, "SUV")
+    
     try:
         ldb.create_database()
-        sample_run()
-        # upload_to_aws
+        # sample_run()
+        run(driver)
+        # upload_to_aws(driver)
         ldb.print_all()
         ldb.delete()
     except Exception as e:

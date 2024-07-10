@@ -10,14 +10,15 @@ __author__ = "Andy Hernandez"
 __date__ = "7/10/2024"
 __status__ = "Development"
 
-class Driver():
+class Driver:
     def __init__(self, name, age, gender, license, car_type):
         self.name = name
         self.age = age
         self.gender = gender
         self.license = license
         self.car_type = car_type
-        self.latitude, self.longitude = self.get_location()
+        self.latitude = 0
+        self.longitude = 0
         self.speed_limit = 0
 
     def get_location(self):

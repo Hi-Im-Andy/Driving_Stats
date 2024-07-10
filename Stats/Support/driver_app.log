@@ -2,3 +2,17 @@
 01/07/2024 09:07:55: INFO     This is an info message
 01/07/2024 09:07:55: WARNING  This is a warning message
 01/07/2024 09:07:55: ERROR    This is an error message
+10/07/2024 11:30:29: INFO     Starting data collection
+10/07/2024 11:32:59: INFO     Starting data collection
+10/07/2024 11:35:29: INFO     Starting data collection
+10/07/2024 11:36:49: INFO     Starting data collection
+10/07/2024 11:36:50: ERROR    Error occured during main upload: set_speed() takes 2 positional arguments but 3 were given
+10/07/2024 11:43:26: INFO     Starting data collection
+10/07/2024 11:43:26: ERROR    Error occured during main upload: sample_run() missing 1 required positional argument: 'driver'
+10/07/2024 11:43:54: INFO     Starting data collection
+10/07/2024 11:43:54: ERROR    Error occured during main upload: sample_run() missing 1 required positional argument: 'driver'
+10/07/2024 11:44:33: INFO     Starting data collection
+10/07/2024 11:44:34: ERROR    Error occured during main upload: name 'driver' is not defined
+10/07/2024 11:45:23: INFO     Starting data collection
+10/07/2024 11:51:43: INFO     Starting data collection
+10/07/2024 11:53:04: INFO     Starting data collection
