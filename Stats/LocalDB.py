@@ -74,6 +74,7 @@ def format(latitude, longitude, limit, speed, acceleration):
     else:
         decceleration = 0
         
+    # Setting the date and time in the event of a driver rolling over to the following day
     date_format = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
     data = [date_format, latitude, longitude, speed, limit, acceleration, decceleration]
     return data

@@ -71,6 +71,8 @@ class Driver:
         # send request to get speed limit at location
         self.update_location()
             # api (self.longitude, self.latitude)
+        # Specify mph instead of kph
+        # https://roads.googleapis.com/v1/speedLimits?path=38.75807927603043,-9.03741754643809&key='api key'
         # Get request in json format and parse to speed limit
         
         self.speed_limit = 0
