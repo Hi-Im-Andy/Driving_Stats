@@ -36,3 +36,24 @@ The databse on the AWS server holder 2 tables, one for the users and one for dri
 ## Local Database
 The local database is a sqlite database that is used to store the most recent driving record before it is analyzed and sent to the aws database.
 Storing it locally allows for the program to run even if there is no connection to the aws server.
+
+
+# Installs
+requests
+pip install requests
+
+Google maps
+pip install googlemaps
+
+sql connector
+pip install mysql-connector-python
+
+sqlite3
+pip install sqlite3
+
+# Keys
+Roads API Key
+https://developers.google.com/maps/documentation/roads/get-api-key
+
+AWS
+https://aws.amazon.com/

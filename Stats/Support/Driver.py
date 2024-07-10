@@ -5,6 +5,7 @@ The drivers information.
 '''
 
 # import googlemaps
+# import requests
 
 __author__ = "Andy Hernandez"
 __date__ = "7/10/2024"
@@ -20,6 +21,10 @@ class Driver:
         self.latitude = 0
         self.longitude = 0
         self.speed_limit = 0
+        self.api_key = ''
+
+    def set_api_key(self):
+        self.api_key = input("API key for google maps: ")
 
     def get_location(self):
         '''
@@ -45,11 +50,10 @@ class Driver:
             self.longitude (float): The longitude of where the user is
             self.latitude (float): The latitude of where the user is
         '''
-        # key = "user key"
-        # key = input("Google maps api key")
-        # maps = googlemaps.Client(key='key
-        # send request to geoloocation 
+        url = f"https://www.googleapis.com/geolocation/v1/geolocate?key={self.api_key}"
+
         # Get request in json format and parse to longitude and latitude
+        # response = requests.get(url).json()
         self.longitude = 0
         self.latitude = 0
         return self.longitude, self.latitude
@@ -65,14 +69,16 @@ class Driver:
         Returns:
             speed_limit (float): The speed limit at the last given location
         '''
-        # key = "user key"
-        # key = input("Google maps api key")
-        # maps = googlemaps.Client(key='key')
         # send request to get speed limit at location
         self.update_location()
-            # api (self.longitude, self.latitude)
-        # Specify mph instead of kph
         # https://roads.googleapis.com/v1/speedLimits?path=38.75807927603043,-9.03741754643809&key='api key'
+        # url = f"https://roads.googleapis.com/v1/speedLimits?path={self.latitude},{self.longitude}&key={self.api_key}"
+        url = f"https://roads.googleapis.com/v1/speedLimits?path={self.latitude},{self.longitude} &units=MPH &key={self.api_key}"
+        # response = requests.get(url)
+        # Print the response
+        # response_json = response.json()
+        # print(response_json)
+        
         # Get request in json format and parse to speed limit
         
         self.speed_limit = 0

@@ -133,6 +133,7 @@ def main():
     driver = "John Smith"
     license = "Y123456"
     driver = Driver(driver, 30, "Male", license, "SUV")
+    driver.set_api_key()
     
     try:
         ldb.create_database()
