@@ -97,6 +97,7 @@ def run(driver):
     '''
     # Getting the starting parameters 
     longitude, latitude = driver.update_location()
+    print(longitude, latitude)
     out = ldb.format(longitude, latitude, 0, 0, 0)
     ldb.upload(out)
     interval = 1

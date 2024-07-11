@@ -16,3 +16,17 @@
 10/07/2024 11:45:23: INFO     Starting data collection
 10/07/2024 11:51:43: INFO     Starting data collection
 10/07/2024 11:53:04: INFO     Starting data collection
+10/07/2024 21:20:40: INFO     Starting data collection
+10/07/2024 21:20:59: ERROR    Error occured during main upload: Expecting value: line 1 column 1 (char 0)
+10/07/2024 21:26:37: INFO     Starting data collection
+10/07/2024 21:30:49: INFO     Starting data collection
+10/07/2024 21:35:13: INFO     Starting data collection
+10/07/2024 21:35:35: ERROR    Error occured during main upload: 'Client' object has no attribute 'speed_limit'
+10/07/2024 21:38:09: INFO     Starting data collection
+10/07/2024 21:38:17: ERROR    Error occured during main upload: 'Client' object has no attribute 'roads'
+10/07/2024 21:41:30: INFO     Starting data collection
+10/07/2024 21:41:37: ERROR    Error occured during main upload: speed_limits() takes 2 positional arguments but 4 were given
+10/07/2024 21:42:13: INFO     Starting data collection
+10/07/2024 21:42:18: ERROR    Error occured during main upload: speed_limits() takes 2 positional arguments but 4 were given
+10/07/2024 21:44:34: INFO     Starting data collection
+10/07/2024 21:44:41: ERROR    Error occured during main upload: PERMISSION_DENIED (Speed limits are not available for this project.)
