@@ -5,8 +5,6 @@ The drivers information.
 '''
 
 import googlemaps
-import googlemaps.client
-import requests
 
 __author__ = "Andy Hernandez"
 __date__ = "7/10/2024"
@@ -71,6 +69,7 @@ class Driver:
         response = googlemaps.Client(key = self.api_key).speed_limits([self.latitude, self.longitude])
         # Speed limits is no longer being used and is not accepting new clients.
         # 'PERMISSION_DENIED (Speed limits are not available for this project.)
+        # Might switch to using the HERE api instead of google maps
         print(response)
  
         

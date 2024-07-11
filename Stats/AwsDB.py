@@ -129,6 +129,23 @@ def upload(data):
 # Should add the option to upload the trip data from the local db
 
 
+##############################################################
+# Users Database
+##############################################################
+
+# Use existing user management systems?
+# Post the device ID
+# Return the user info
+# Adding the user to the DB based on the device.
+# Post multiple devices to the same user if wanted.
+# Change user
+# Delete user
+# Delete user from DB
+# Delete device from user
+# Get user
+# Get user devices
+# Change user
+
 
 if (__name__ == "__main__"):
     try:
