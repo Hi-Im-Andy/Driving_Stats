@@ -4,11 +4,7 @@
 Used to get information from the users device.
 '''
 
-
 import googlemaps
-# pip install -U googlemaps
-# Use roads api to get speed limit
-# Possibly use geolocation api to get the longitude and latitude
 
 
 __author__ = "Andy Hernandez"
