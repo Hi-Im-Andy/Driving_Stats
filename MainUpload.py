@@ -57,34 +57,6 @@ def upload_to_aws(driver):
     # Upload to aws
     adb.upload(data)
 
-def sample_run():
-    '''
-    Simulates a straight drive with changes in speed and updates the local database
-
-    Args:
-        None
-
-    Returns:
-        None
-    '''
-    time_start = time.time()
-
-    longitude = 0
-    latitude = 0
-
-    out = ldb.format(0, 0, 0, 0, 0)
-    ldb.upload(out)
-    time.sleep(1)
-    
-    while(time.time() - time_start < 60):
-        longitude += (0.00001 * random.randrange(9)) 
-        latitude += 0.00001
-        speed = ldb.set_speed_sample(latitude, longitude, 1)
-        acceleration = ldb.set_acceleration(speed, 1)
-        out = ldb.format(latitude, longitude, 0, speed, acceleration)
-        ldb.upload(out)
-        time.sleep(1)
-
 def run(driver):
     '''
     Gets the data from a device and updates the local database
@@ -110,7 +82,7 @@ def run(driver):
     while (i <= 60):
         i += 1
         speed = ldb.set_speed(driver, 1)
-        acceleration = ldb.set_acceleration(speed, interval)
+        acceleration = ldb.set_acceleration(driver, interval)
         longitude, latitude = driver.get_location()
         data = ldb.format(latitude, longitude, driver.get_speed_limit(), speed, acceleration)
         ldb.upload(data)
