@@ -23,12 +23,15 @@ def add_driver():
     
 
 def show_something():
-    Visuals.acceleration_overlay()
+    
+    speed = LocalDB.get_speed()
+    Visuals.display_speed(speed)
 
 
 
 if(__name__ == "__main__"):
-    logger = Log.make_log()
-    current_driver = Driver("John Smith", )
-    logger.info(f"Main is running.")
-    AwsDB.get_all()
+    show_something()
+    # logger = Log.make_log()
+    # current_driver = Driver("John Smith", )
+    # logger.info(f"Main is running.")
+    # AwsDB.get_all()

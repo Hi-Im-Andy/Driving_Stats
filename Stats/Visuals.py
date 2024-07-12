@@ -7,6 +7,11 @@ Create graphs to visualize the data in the database
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+__author__ = "Andy Hernandez"
+__date__ = "7/12/2024"
+__status__ = "Development"
+
 ##############################################################
 # Trip Visuals
 ##############################################################
@@ -22,8 +27,8 @@ def display_speed(speed):
     '''
     plt.plot(speed)
     plt.title("Trip Speed")
-    plt.xlabel('Time (s)')
-    plt.ylabel('Speed (mph)')
+    plt.xlabel("Time (s)")
+    plt.ylabel("Speed (mph)")
     plt.show()
 
 def speed_limit_overlay(speed, speed_limit):
@@ -41,8 +46,8 @@ def speed_limit_overlay(speed, speed_limit):
     plt.plot(speed_limit, "r--")
 
     plt.title("Speed and Speed Limit")
-    plt.xlabel('Time (s)')
-    plt.ylabel('Speed (mph)')
+    plt.xlabel("Time (s)")
+    plt.ylabel("Speed (mph)")
     plt.show()
 
 def speed_overlay(speed, max_speed, avg_speed):
@@ -151,6 +156,9 @@ def speed_compare(speed1, speed2):
     plt.show()
 
 
+##############################################################
+# Main
+##############################################################
 if (__name__ == "__main__"):
     speed = [10, 11, 12, 13, 16, 12]
     speed_limit = [10, 10, 10, 10, 15, 10]
