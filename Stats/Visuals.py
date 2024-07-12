@@ -21,7 +21,10 @@ def display_speed(speed):
     Returns:
         None
     '''
-    print()
+    plt.plot(speed)
+    plt.xlabel('Time (s)')
+    plt.ylabel('Speed (mph)')
+    plt.show()
 
 def speed_limit_overlay(speed, speed_limit):
     '''
@@ -109,3 +112,8 @@ def speed_compare(speed1, speed2):
         None
     '''
     print()
+
+
+if (__name__ == "__main__"):
+    speed = [10, 11, 12, 13, 16, 12]
+    display_speed(speed)

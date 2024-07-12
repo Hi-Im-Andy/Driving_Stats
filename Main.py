@@ -22,6 +22,9 @@ def add_driver():
     car_type = "Truck"
     
 
+def show_something():
+    Visuals.acceleration_overlay()
+
 
 
 if(__name__ == "__main__"):

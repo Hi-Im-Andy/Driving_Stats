@@ -85,9 +85,11 @@ def avg_acceleration():
     Returns:
         avg_acc (float): The average acceleration in mph/s over the given trip.
     '''
-    # Need to remove the 0 values to stop it from scewing
+    # Gets the acceleration from the data base
     acc_tup = localDB.get_acceleration()
     acc = [value[0] for value in acc_tup]
+    # Removes all 0 values in the list
+    acc = [value for value in acc if value != 0]
     avg_acc = float(sum(acc) / len(acc))
     return avg_acc
 
@@ -103,51 +105,9 @@ def avg_decceleration():
     '''
     dec_tup = localDB.get_acceleration()
     dec = [value[0] for value in dec_tup]
+    dec = [value for value in dec != 0]
     avg_dec = float(sum(dec) / len(dec))
     return avg_dec
-
-
-##############################################################
-# Warning and Violation
-##############################################################
-def warnings():
-    '''
-    Reads all of the data and notifies the driver of possible recklessness
-
-    Args:
-        None
-
-    Returns:
-        warnings (int): The number of times that the driver was being reckless
-    '''
-    # group data by speed limit
-    # If the average speed over set speed limit is +-5mph
-        # Add warning
-    # Check all data, if an data point is +-10mph speed limit
-    # and the neighbors are not
-    # Add a warning 
-    print()
-
-
-
-def violations():
-    '''
-    Reads all of the data and returns the amount of times the driver was significantly reckless
-
-    Args:
-        None
-
-    Returns:
-        violations (int): The number of times that a driver was significantly reckless
-    '''
-    # group data by speed limit
-    # If the average speed over set speed limit is +-10mph
-        # Add warning
-    # Check all data, if an data point is +-10mph speed limit
-    # and either neighbor is also over
-    # Add a violation
-    
-    print()
 
 ##############################################################
 # Comparisons

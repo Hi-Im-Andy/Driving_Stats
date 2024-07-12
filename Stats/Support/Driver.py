@@ -120,6 +120,8 @@ class Driver:
         '''
         self.speed.append(new_speed)
         self.speed.pop(0)
+        self.update_warnings()
+        self.update_violations()
 
     def get_speed(self):
         '''
