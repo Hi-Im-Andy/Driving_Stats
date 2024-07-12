@@ -16,6 +16,8 @@ __date__ = "7/9/2024"
 __status__ = "Development"
 
 
+LOGGER = Log.make_log()
+
 def upload_to_aws(driver):
     '''
     Takes the data from the local database, analyzes it, and uploads it to the aws database.
@@ -26,6 +28,7 @@ def upload_to_aws(driver):
     Returns:
         None
     '''
+    LOGGER.info("Starting upload to AWS.")
     # Basic upload info
     time_span = "100"
 
@@ -56,6 +59,7 @@ def upload_to_aws(driver):
 
     # Upload to aws
     adb.upload(data)
+    LOGGER.info("Upload to AWS complete.")
 
 def run(driver):
     '''
@@ -67,6 +71,7 @@ def run(driver):
     Returns:
         None
     '''
+    LOGGER.info(f"Gathering data for driver {driver.name}")
     # Getting the starting parameters 
     longitude, latitude = driver.update_location()
     print(longitude, latitude)
@@ -87,6 +92,7 @@ def run(driver):
         data = ldb.format(latitude, longitude, driver.get_speed_limit(), speed, acceleration)
         ldb.upload(data)
         time.sleep(interval)
+    LOGGER.info("Finished gathering data from the driver.")
 
 
 def main():
@@ -99,8 +105,7 @@ def main():
     Returns:
         None
     '''
-    logger = Log.make_log()
-    logger.info("Starting data collection")
+    LOGGER.info("Starting data collection")
     
     # Creating driver
     driver = "John Smith"
@@ -110,13 +115,12 @@ def main():
     
     try:
         ldb.create_database()
-        # sample_run()
         run(driver)
         upload_to_aws(driver)
         ldb.print_all()
         ldb.delete()
     except Exception as e:
-        logger.error(f"Error occured during main upload: {e}")
+        LOGGER.error(f"Error occured during main upload: {e}")
         sys.exit(f"Error occured during main upload: {e}")
 
 if (__name__ == "__main__"):

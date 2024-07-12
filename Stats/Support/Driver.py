@@ -103,7 +103,7 @@ class Driver:
         response = here_api.match_route()
         # response = here_api.speed_limit([self.latitude, self.longitude]).as_dict()
         print(response)
- 
+        # Will replace the following line with self.speed_limit = reponse... once the request is correct
         self.speed_limit = 0
         return self.speed_limit
     
@@ -157,8 +157,6 @@ class Driver:
         '''
         if (self.speed_limit < self.speed[9]):
             self.warnings += 1
-
-
 
     def get_warnings(self):
         '''

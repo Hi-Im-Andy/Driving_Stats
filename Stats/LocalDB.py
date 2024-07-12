@@ -139,12 +139,15 @@ def set_speed(driver, interval):
     Returns:
         speed (float): The speed in miles per hour
     '''
+    # Getting the last location, updating, then getting the current location
     lat1, lon1 = driver.get_location()
     longitude, latitude = driver.update_location()
+    # Converting the location difference into distance over time then converting to mph
     lat1, lon1, latitude, longitude = math.radians(lat1), math.radians(lon1), math.radians(latitude), math.radians(longitude)
     distance = 6371 * math.sqrt(((latitude-lat1)**2) + ((longitude-lon1)**2))
     speed = float(distance / interval * 3600)
     speed = speed * 0.911344416 * 0.68181818
+    # Updating and returning the most recent speed
     driver.update_speed(speed)
     return speed
 
