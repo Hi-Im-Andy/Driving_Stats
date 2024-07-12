@@ -4,7 +4,6 @@
 Create graphs to visualize the data in the database
 '''
 
-import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -22,6 +21,7 @@ def display_speed(speed):
         None
     '''
     plt.plot(speed)
+    plt.title("Trip Speed")
     plt.xlabel('Time (s)')
     plt.ylabel('Speed (mph)')
     plt.show()
@@ -37,7 +37,13 @@ def speed_limit_overlay(speed, speed_limit):
     Returns:
         None
     '''
-    print()
+    plt.plot(speed)    
+    plt.plot(speed_limit, "r--")
+
+    plt.title("Speed and Speed Limit")
+    plt.xlabel('Time (s)')
+    plt.ylabel('Speed (mph)')
+    plt.show()
 
 def speed_overlay(speed, max_speed, avg_speed):
     '''
@@ -51,7 +57,14 @@ def speed_overlay(speed, max_speed, avg_speed):
     Returns:
         None
     '''
-    print()
+    plt.plot(speed)
+    plt.plot(max_speed, "r--")
+    plt.plot(avg_speed, "g--")
+
+    plt.title("Speed Data")
+    plt.xlabel("Time (s)")
+    plt.ylabel("Speed (mph)")
+    plt.show()
 
 def acceleration_overlay(acceleration, max_acceleration, avg_acceleration):
     '''
@@ -65,7 +78,14 @@ def acceleration_overlay(acceleration, max_acceleration, avg_acceleration):
     Returns:
         None
     '''
-    print()
+    plt.plot(acceleration)
+    plt.plot(max_acceleration, "r--")
+    plt.plot(avg_acceleration, "g--")
+
+    plt.title("Acceleration Data")
+    plt.xlabel("Time (s)")
+    plt.ylabel("Acceleration (mph/s)")
+    plt.show()
 
 def decceleration_overlay(decceleration, min_decceleration, avg_decceleration):
     '''
@@ -79,7 +99,14 @@ def decceleration_overlay(decceleration, min_decceleration, avg_decceleration):
     Returns:
         None
     '''
-    print()
+    plt.plot(decceleration)
+    plt.plot(min_decceleration)
+    plt.plot(avg_decceleration)
+
+    plt.title("Decceleration Data")
+    plt.xlabel("Time (s)")
+    plt.ylabel("Decceleration (mph/s)")
+    plt.show()
 
 def overlay(speed, speed_limit, max_acc_point, min_dec_point):
     '''
@@ -94,7 +121,11 @@ def overlay(speed, speed_limit, max_acc_point, min_dec_point):
     Returns:
         None
     '''
-    print()
+    plt.plot(speed)
+    plt.plot(speed_limit, "r--")
+    plt.plot(max_acc_point[0], max_acc_point[1], "g--")
+    plt.plot(min_dec_point[0], min_dec_point[1], "b--")
+    plt.show()
 
 
 ##############################################################
@@ -111,9 +142,17 @@ def speed_compare(speed1, speed2):
     Returns:
         None
     '''
-    print()
+    plt.plot(speed1)
+    plt.plot(speed2)
+    
+    plt.title("Speed VS Speed")
+    plt.xlabel("Time (s)")
+    plt.ylabel("Speed (mph)")
+    plt.show()
 
 
 if (__name__ == "__main__"):
     speed = [10, 11, 12, 13, 16, 12]
-    display_speed(speed)
+    speed_limit = [10, 10, 10, 10, 15, 10]
+    # display_speed(speed)
+    speed_limit_overlay(speed, speed_limit)
