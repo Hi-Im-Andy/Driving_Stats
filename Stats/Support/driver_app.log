@@ -30,3 +30,26 @@
 10/07/2024 21:42:18: ERROR    Error occured during main upload: speed_limits() takes 2 positional arguments but 4 were given
 10/07/2024 21:44:34: INFO     Starting data collection
 10/07/2024 21:44:41: ERROR    Error occured during main upload: PERMISSION_DENIED (Speed limits are not available for this project.)
+11/07/2024 22:04:19: INFO     Starting data collection
+11/07/2024 22:04:30: ERROR    Error occured during main upload: PERMISSION_DENIED (Speed limits are not available for this project.)
+11/07/2024 22:29:13: INFO     Starting data collection
+11/07/2024 22:29:36: ERROR    Error occured during main upload: 'GeocoderApi' object has no attribute 'geocode'
+11/07/2024 22:33:15: INFO     Starting data collection
+11/07/2024 22:33:19: ERROR    Error occured during main upload: 'GeocoderResponse' object is not subscriptable
+11/07/2024 22:33:53: INFO     Starting data collection
+11/07/2024 22:33:59: ERROR    Error occured during main upload: Invalid API key provided.
+11/07/2024 22:36:51: INFO     Starting data collection
+11/07/2024 22:36:54: ERROR    Error occured during main upload: 'GeocoderResponse' object is not subscriptable
+11/07/2024 22:40:44: INFO     Starting data collection
+11/07/2024 22:43:41: INFO     Starting data collection
+11/07/2024 22:43:44: ERROR    Error occured during main upload: 'item'
+11/07/2024 22:44:00: INFO     Starting data collection
+11/07/2024 22:48:24: INFO     Starting data collection
+11/07/2024 22:52:52: INFO     Starting data collection
+11/07/2024 22:52:58: ERROR    Error occured during main upload: 'RoutingApi' object has no attribute 'speed_limit'
+11/07/2024 22:54:45: INFO     Starting data collection
+11/07/2024 22:54:50: ERROR    Error occured during main upload: RoutingApi.route_v8() missing 2 required positional arguments: 'origin' and 'destination'
+11/07/2024 22:59:17: INFO     Starting data collection
+11/07/2024 22:59:26: ERROR    Error occured during main upload: RoutingApi.route_v8() missing 2 required positional arguments: 'origin' and 'destination'
+11/07/2024 23:05:31: INFO     Starting data collection
+11/07/2024 23:05:39: ERROR    Error occured during main upload: RmeApi.match_route() missing 1 required positional argument: 'gpx_file_content'

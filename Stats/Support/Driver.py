@@ -4,7 +4,7 @@
 The drivers information.
 '''
 
-import googlemaps
+import herepy
 
 __author__ = "Andy Hernandez"
 __date__ = "7/10/2024"
@@ -23,7 +23,7 @@ class Driver:
         self.api_key = ''
 
     def set_api_key(self):
-        self.api_key = input("API key for google maps: ")
+        self.api_key = input("API key for HERE: ")
 
     def get_location(self):
         '''
@@ -49,9 +49,12 @@ class Driver:
             self.longitude (float): The longitude of where the user is
             self.latitude (float): The latitude of where the user is
         '''
-        response = googlemaps.Client(key = self.api_key).geolocate()
-        self.latitude = response['location']['lat']
-        self.longitude = response['location']['lng']
+        here_api = herepy.GeocoderApi(api_key = self.api_key)
+
+        response = here_api.free_form("current location").as_dict()
+
+        self.longitude = response["items"][0]["position"]["lng"]
+        self.latitude = response["items"][0]["position"]["lat"]
         return self.longitude, self.latitude
 
 
@@ -66,10 +69,10 @@ class Driver:
             speed_limit (float): The speed limit at the last given location
         '''
         self.update_location()
-        response = googlemaps.Client(key = self.api_key).speed_limits([self.latitude, self.longitude])
-        # Speed limits is no longer being used and is not accepting new clients.
-        # 'PERMISSION_DENIED (Speed limits are not available for this project.)
-        # Might switch to using the HERE api instead of google maps
+        here_api = herepy.RmeApi(api_key = self.api_key)
+        # Need to add a gpx file content
+        response = here_api.match_route()
+        # response = here_api.speed_limit([self.latitude, self.longitude]).as_dict()
         print(response)
  
         

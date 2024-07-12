@@ -39,11 +39,16 @@ Storing it locally allows for the program to run even if there is no connection 
 
 
 # Installs
+Obsolete
 requests
 pip install requests
 
+Obsolete
 Google maps
 pip install googlemaps
+
+HERE
+pip install herepy
 
 sql connector
 pip install mysql-connector-python
@@ -52,8 +57,13 @@ sqlite3
 pip install sqlite3
 
 # Keys
+Obsolete
 Roads API Key
 https://developers.google.com/maps/documentation/roads/get-api-key
+
+
+Here Api
+https://platform.here.com/
 
 AWS
 https://aws.amazon.com/

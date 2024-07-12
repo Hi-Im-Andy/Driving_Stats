@@ -140,7 +140,7 @@ def main():
         ldb.create_database()
         # sample_run()
         run(driver)
-        # upload_to_aws(driver)
+        upload_to_aws(driver)
         ldb.print_all()
         ldb.delete()
     except Exception as e:
