@@ -15,42 +15,55 @@ __status__ = "Development"
 # Connection and creation of AWS table
 ##############################################################
 def create_aws_db():
+    '''
+    Creates a new database in the aws server for the driving stats
+
+    Args:
+        None
+
+    Returns:
+        None
+    '''
     with connect(
         host = input("Host: "),
         user = input("User: "),
         password = getpass("Password: "),
     ) as connection:
-        create_query = "CREATE DATABASE driving_stats"
+        create_query = "CREATE DATABASE IF NOT EXISTS driving_stats"
         with connection.cursor() as cursor:
             cursor.execute(create_query)
 
 
 def connect_aws_db():
+    '''
+    Connects to the aws driving stats database
+
+    Args:
+        None
+
+    Returns:
+        Connection (var): The sql connection to the database
+    '''
     with connect(
         host = input("Host: "),
         user = input("User: "),
         password = getpass("Password: "),
-        database = "driving_stats",
+        database = "driving_stats"
     ) as connection:
         print(connection)
         return connection
+    
+def create_driving_table():
+    '''
+    Creates a new table for the driving records for an aws database
 
-def create_tables():
+    Args:
+        None
+
+    Returns:
+        None
+    '''
     connection = connect_aws_db()
-    create_users_query = """
-    CREATE TABLE IF NOT EXISTS users (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(100) NOT NULL,
-        age INT,
-        gender VARCHAR(100),
-        license VARCHAR(100) NOT NULL,
-        car_type VARCHAR(100) NOT NULL
-    )
-    """
-    with connection.cursor() as cursor:
-        cursor.execute(create_users_query)
-        connection.commit()
-    # 
     create_driving_record = """
     CREATE TABLE IF NOT EXISTS driving_record (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -62,8 +75,8 @@ def create_tables():
         average_speed FLOAT,
         max_acceleration FLOAT,
         average_acceleration FLOAT,
-        Min_decceleration Float,
-        average_decceleration FLOAT,
+        Min_deceleration Float,
+        average_deceleration FLOAT,
         warnings INT,
         violations INT
     )
@@ -73,10 +86,41 @@ def create_tables():
         connection.commit()
         connection.close()
 
+def delete():
+    '''
+    Drops all tables from the database
+
+    Args:
+        None
+
+    Returns:
+        None
+    '''
+    connection = connect_aws_db()
+    with connection.cursor() as cursor:
+        cursor.execute("DROP TABLE IF EXISTS driving_record")
+        cursor.execute("DROP TABLE IF EXISTS users")
+
+def clear():
+    '''
+    Clears all of the data inside of the tables
+
+    Args:
+        None
+
+    Returns:
+        None
+    '''
+    connection = connect_aws_db()
+    with connection.cursor() as cursor:
+        cursor.execute("TRUNCATE TABLE IF EXISTS driving_record")
+        cursor.execute("TRUNCATE TABLE IF EXISTS users")
+
+
 ##############################################################
 # Uploads
 ##############################################################
-def format(driver, time_span, max_speed, avg_speed, max_acc, avg_acc, min_dec, warnings, violations):
+def format(driver, time_span, max_speed, avg_speed, max_acc, avg_acc, min_dec):
     '''
     Places all of the input arguments into a list to prepare them for the query
 
@@ -88,8 +132,6 @@ def format(driver, time_span, max_speed, avg_speed, max_acc, avg_acc, min_dec, w
         max_acc (float): The maximum acceleration of the trip
         avg_acc (float): The average acceleration of the trip
         min_dec (float): The minimum deceleration of the trip
-        warnings (int): The number of warnings the driver received during the trip
-        violations (int): The number of violations the driver received during the trip
     
     Returns:
         data (list): The list of the ordered inputs
@@ -105,8 +147,8 @@ def format(driver, time_span, max_speed, avg_speed, max_acc, avg_acc, min_dec, w
         max_acc,
         avg_acc,
         min_dec,
-        warnings,
-        violations
+        driver.warnings,
+        driver.violations
     ]
     return data
 
@@ -127,25 +169,36 @@ def upload(data):
         connection.close()
 
 # Should add the option to upload the trip data from the local db
-
+# Create a new table and reference it in the main driving record table
 
 ##############################################################
 # Users Database
 ##############################################################
+def create_user_table():
+    '''
+    Creates a new table for the user(s) in the aws database
+    
+    Args:
+        None
 
-# Use existing user management systems?
-# Post the device ID
-# Return the user info
-# Adding the user to the DB based on the device.
-# Post multiple devices to the same user if wanted.
-# Change user
-# Delete user
-# Delete user from DB
-# Delete device from user
-# Get user
-# Get user devices
-# Change user
-
+    Returns:
+        None
+    '''
+    connection = connect_aws_db()
+    create_users_query = """
+    CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        age INT,
+        gender VARCHAR(100),
+        license VARCHAR(100) NOT NULL,
+        car_type VARCHAR(100) NOT NULL
+    )
+    """
+    with connection.cursor() as cursor:
+        cursor.execute(create_users_query)
+        connection.commit()
+        connection.close()
 
 if (__name__ == "__main__"):
     try:

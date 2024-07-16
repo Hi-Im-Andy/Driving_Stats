@@ -35,10 +35,10 @@ def upload_to_aws(driver):
     # Run analysis on data to get summed up info
     avg_speed = Analysis.average_speed()
     avg_acc = Analysis.avg_acceleration()
-    avg_dec = Analysis.avg_decceleration()
+    avg_dec = Analysis.avg_deceleration()
     max_speed = Analysis.max_speed()
     max_acc = Analysis.max_acceleration()
-    min_dec = Analysis.min_decceleration()
+    min_dec = Analysis.min_deceleration()
     
     warnings = Analysis.warnings()
     violations = Analysis.violations()

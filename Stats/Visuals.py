@@ -92,25 +92,25 @@ def acceleration_overlay(acceleration, max_acceleration, avg_acceleration):
     plt.ylabel("Acceleration (mph/s)")
     plt.show()
 
-def decceleration_overlay(decceleration, min_decceleration, avg_decceleration):
+def deceleration_overlay(deceleration, min_deceleration, avg_deceleration):
     '''
-    Graphs the decceleration along with the min and average
+    Graphs the deceleration along with the min and average
 
     Args:
-        decceleration (list): The list of all of the decceleration during the trip
-        min_decceleration (float): The minimum decceleration that was reached during the
-        avg_decceleration (float): The average decceleration that was reached during the trip
+        deceleration (list): The list of all of the deceleration during the trip
+        min_deceleration (float): The minimum deceleration that was reached during the
+        avg_deceleration (float): The average deceleration that was reached during the trip
 
     Returns:
         None
     '''
-    plt.plot(decceleration)
-    plt.plot(min_decceleration)
-    plt.plot(avg_decceleration)
+    plt.plot(deceleration)
+    plt.plot(min_deceleration)
+    plt.plot(avg_deceleration)
 
-    plt.title("Decceleration Data")
+    plt.title("deceleration Data")
     plt.xlabel("Time (s)")
-    plt.ylabel("Decceleration (mph/s)")
+    plt.ylabel("deceleration (mph/s)")
     plt.show()
 
 def overlay(speed, speed_limit, max_acc_point, min_dec_point):
@@ -121,7 +121,7 @@ def overlay(speed, speed_limit, max_acc_point, min_dec_point):
         speed (list): The list of speeds throughout the trip
         speed_limit (list): The list of the speed limits throughout the trip
         max_acc_point (tuple): The point where the max acceleration was reached
-        min_dec_point (tuple): The point where the minimum decceleration was reached
+        min_dec_point (tuple): The point where the minimum deceleration was reached
 
     Returns:
         None

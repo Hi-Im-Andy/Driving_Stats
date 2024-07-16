@@ -45,7 +45,7 @@ def max_speed():
 
 
 ##############################################################
-# Acceleration and Decceleration
+# Acceleration and deceleration
 ##############################################################
 def max_acceleration():
     '''
@@ -61,16 +61,16 @@ def max_acceleration():
     max_acc = max(acc)
     return max_acc
 
-def min_decceleration():
+def min_deceleration():
     '''
     Gets the minimumum decceleraion (quickest breaking time) of the latest trip taken.
     
     Args:
         None
     Returns:
-        min_dec (float): The minimum decceleration in mph/s over the given trip.
+        min_dec (float): The minimum deceleration in mph/s over the given trip.
     '''
-    dec_tup = localDB.get_decceleration()
+    dec_tup = localDB.get_deceleration()
     dec = [value[0] for value in dec_tup]
     min_dec = min(dec)
     return min_dec
@@ -93,15 +93,15 @@ def avg_acceleration():
     avg_acc = float(sum(acc) / len(acc))
     return avg_acc
 
-def avg_decceleration():
+def avg_deceleration():
     '''
-    Gets the average decceleration time over the course of the tip.
+    Gets the average deceleration time over the course of the tip.
 
     Args:
         None
 
     Returns:
-        avg_dec (float): The average decceleration in mph/s over the given trip.
+        avg_dec (float): The average deceleration in mph/s over the given trip.
     '''
     dec_tup = localDB.get_acceleration()
     dec = [value[0] for value in dec_tup]
@@ -129,22 +129,22 @@ def acceleration_comparison(car_type, acc_time):
     # Compare the given acceleration to the average acceleration
     print()
 
-def decceleration_comparison(car_types, dec_time):
+def deceleration_comparison(car_types, dec_time):
     '''
-    Compares the input car type average decceleration and returns the delta from average.
+    Compares the input car type average deceleration and returns the delta from average.
 
     Args:
         car_type (str): The car type determines what time should be compared
-        dec_time (float): Given decceleration for the trip that will be compared to the overall average
+        dec_time (float): Given deceleration for the trip that will be compared to the overall average
 
     Returns:
-        dec_delta (float): Decceleration difference for the given vehicle type and the given decceleration
+        dec_delta (float): deceleration difference for the given vehicle type and the given deceleration
     
     '''
-    # Query the local database for the all of the deccelerations
-    # Keep onlt the deccelerations before any speed == 0 for x number of seconds prior
-    # All of those deccelerations should be averaged
-    # Compare the given decceleration to the average decceleration
+    # Query the local database for the all of the decelerations
+    # Keep onlt the decelerations before any speed == 0 for x number of seconds prior
+    # All of those decelerations should be averaged
+    # Compare the given deceleration to the average deceleration
 
     print()
 

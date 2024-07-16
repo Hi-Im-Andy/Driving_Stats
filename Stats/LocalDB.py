@@ -34,7 +34,7 @@ def create_database():
         speed FLOAT,
         speed_limit INT,
         acceleration FLOAT,
-        decceleration FLOAT
+        deceleration FLOAT
     )
     ''')
 
@@ -52,6 +52,19 @@ def delete():
     c = conn.cursor()
     c.execute("DROP TABLE trip")
 
+def clear():
+    '''
+    Removes all data inside of the table
+
+    Args:
+        None
+
+    Returns: 
+        None
+    '''
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("TRUNCATE TABLE IF EXISTS trip")
 
 def format(latitude, longitude, limit, speed, acceleration):
     '''
@@ -63,20 +76,20 @@ def format(latitude, longitude, limit, speed, acceleration):
         limit (int): The speed limit of the current location.
         speed (float): The current speed of the vehicle.
         acceleration (float): The current acceleration of the vehicle.
-        decceleration (float): The current decceleration of the vehicle.
+        deceleration (float): The current deceleration of the vehicle.
     
     Returns:
         data (list): The ordered arguments along with the current time.
     '''
     if (acceleration < 0):
-        decceleration = acceleration
+        deceleration = acceleration
         acceleration = 0
     else:
-        decceleration = 0
+        deceleration = 0
         
     # Setting the date and time in the event of a driver rolling over to the following day
     date_format = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
-    data = [date_format, latitude, longitude, speed, limit, acceleration, decceleration]
+    data = [date_format, latitude, longitude, speed, limit, acceleration, deceleration]
     return data
 
 def upload(data):
@@ -153,7 +166,7 @@ def set_speed(driver, interval):
 
 def set_acceleration(driver, interval):
     '''
-    Calculates the current acceleration or decceleration based off of the change of speed in the last interval
+    Calculates the current acceleration or deceleration based off of the change of speed in the last interval
 
     Args:
         speed (float): The speed in miles per hour of the current input
@@ -195,19 +208,19 @@ def get_acceleration():
     c.execute("SELECT acceleration FROM trip")
     return c.fetchall()
 
-def get_decceleration():
+def get_deceleration():
     '''
-    Gets the deccelerations from the entire trip
+    Gets the decelerations from the entire trip
 
     Args:
         None
 
     Returns:
-        c.fetchall() (list): A list of all of the deccelerations during the trip
+        c.fetchall() (list): A list of all of the decelerations during the trip
     '''
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
-    c.execute("SELECT decceleration FROM trip")
+    c.execute("SELECT deceleration FROM trip")
     return c.fetchall()
 
 
