@@ -53,3 +53,24 @@
 11/07/2024 22:59:26: ERROR    Error occured during main upload: RoutingApi.route_v8() missing 2 required positional arguments: 'origin' and 'destination'
 11/07/2024 23:05:31: INFO     Starting data collection
 11/07/2024 23:05:39: ERROR    Error occured during main upload: RmeApi.match_route() missing 1 required positional argument: 'gpx_file_content'
+12/07/2024 18:02:32: INFO     Starting data collection
+12/07/2024 18:02:35: INFO     Gathering data for driver John Smith
+12/07/2024 18:02:38: ERROR    Error occured during main upload: RmeApi.match_route() missing 1 required positional argument: 'gpx_file_content'
+12/07/2024 18:09:37: INFO     Starting data collection
+12/07/2024 18:09:40: INFO     Gathering data for driver John Smith
+12/07/2024 18:10:35: INFO     Starting data collection
+12/07/2024 18:10:50: INFO     Gathering data for driver John Smith
+13/07/2024 17:20:14: INFO     Starting data collection
+13/07/2024 17:20:18: INFO     Gathering data for driver John Smith
+13/07/2024 17:37:09: INFO     Starting data collection
+13/07/2024 17:37:13: INFO     Gathering data for driver John Smith
+13/07/2024 17:37:16: ERROR    Error occured during main upload: RmeApi.match_route() missing 1 required positional argument: 'gpx_file_content'
+13/07/2024 17:45:55: INFO     Starting data collection
+13/07/2024 17:45:58: INFO     Gathering data for driver John Smith
+13/07/2024 17:46:01: ERROR    Error occured during main upload: 'dict' object has no attribute 'encode'
+13/07/2024 17:46:41: INFO     Starting data collection
+13/07/2024 17:46:43: INFO     Gathering data for driver John Smith
+13/07/2024 17:46:46: ERROR    Error occured during main upload: 'dict' object has no attribute 'encode'
+13/07/2024 17:47:22: INFO     Starting data collection
+13/07/2024 17:47:31: INFO     Gathering data for driver John Smith
+13/07/2024 17:47:34: ERROR    Error occured during main upload: 'dict' object has no attribute 'encode'

@@ -100,12 +100,41 @@ class Driver:
         self.update_location()
         here_api = herepy.RmeApi(api_key = self.api_key)
         # Need to add a gpx file content
-        response = here_api.match_route()
+        payload = {
+            "apikey": self.api_key,
+            "routeMatch": 1,
+            "mode": "fastest;car;traffic:disabled;",
+            "attributes": "SPEED_LIMITS_FCn(*),LINK_ATTRIBUTE_FCn(*),TRAFFIC_PATTERN_FCn(*),TRUCK_SPEED_LIMITS_FCn(*),SPEED_LIMITS_VAR_FCn(*),SPEED_LIMITS_COND_FCn(*)",
+            "LATITUDE": self.latitude,
+            "LONGITUDE": self.longitude
+        }
+        
+        response = here_api.match_route(payload)
         # response = here_api.speed_limit([self.latitude, self.longitude]).as_dict()
         print(response)
         # Will replace the following line with self.speed_limit = reponse... once the request is correct
+        #import requests
+        #url = "https://routematching.hereapi.com/v8/match/routelinks"
+        # payload = {
+        #     "apikey": self.api_key,
+        #     "routeMatch": 1,
+        #     "mode": "fastest;car;traffic:disabled;",
+        #     "attributes": "SPEED_LIMITS_FCn(*),LINK_ATTRIBUTE_FCn(*),TRAFFIC_PATTERN_FCn(*),TRUCK_SPEED_LIMITS_FCn(*),SPEED_LIMITS_VAR_FCn(*),SPEED_LIMITS_COND_FCn(*)",
+        #     "LATITUDE": self.latitude,
+        #     "LONGITUDE": self.longitude
+        # }
+
+        #response = requests.post(url, json=payload)
+        #ata = response.json()
+        #print(data)
+        # Extract the speed limit from the response
+        #speed_limit = data.get("speedLimit")
+
+        #print(f"Max speed limit: {speed_limit} km/h")
+
         self.speed_limit = 0
         return self.speed_limit
+    
     
     def update_speed(self, new_speed):
         '''

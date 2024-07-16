@@ -4,7 +4,7 @@
 Gathers and uploads the driving data.
 '''
 
-import time, sys, random
+import time, sys
 from Stats.Support import Log
 from Stats.Support.Driver import Driver
 from Stats import LocalDB as ldb
