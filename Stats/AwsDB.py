@@ -5,6 +5,7 @@
 from mysql.connector import connect, Error
 from getpass import getpass
 from datetime import datetime
+import LocalDB as ldb
 
 __author__ = "Andy Hernandez"
 __data__ = "06-30-2024"
@@ -32,7 +33,6 @@ def create_aws_db():
         create_query = "CREATE DATABASE IF NOT EXISTS driving_stats"
         with connection.cursor() as cursor:
             cursor.execute(create_query)
-
 
 def connect_aws_db():
     '''
@@ -64,7 +64,7 @@ def create_driving_table():
         None
     '''
     connection = connect_aws_db()
-    create_driving_record = """
+    create_driving_record = '''
     CREATE TABLE IF NOT EXISTS driving_record (
         id INT AUTO_INCREMENT PRIMARY KEY,
         driver VARCHAR(100),
@@ -78,43 +78,14 @@ def create_driving_table():
         Min_deceleration Float,
         average_deceleration FLOAT,
         warnings INT,
-        violations INT
+        violations INT,
+        trip VARCHAR(100)
     )
-    """ 
+    '''
     with connection.cursor() as cursor:
         cursor.execute(create_driving_record)
         connection.commit()
         connection.close()
-
-def delete():
-    '''
-    Drops all tables from the database
-
-    Args:
-        None
-
-    Returns:
-        None
-    '''
-    connection = connect_aws_db()
-    with connection.cursor() as cursor:
-        cursor.execute("DROP TABLE IF EXISTS driving_record")
-        cursor.execute("DROP TABLE IF EXISTS users")
-
-def clear():
-    '''
-    Clears all of the data inside of the tables
-
-    Args:
-        None
-
-    Returns:
-        None
-    '''
-    connection = connect_aws_db()
-    with connection.cursor() as cursor:
-        cursor.execute("TRUNCATE TABLE IF EXISTS driving_record")
-        cursor.execute("TRUNCATE TABLE IF EXISTS users")
 
 
 ##############################################################
@@ -136,6 +107,7 @@ def format(driver, time_span, max_speed, avg_speed, max_acc, avg_acc, min_dec):
     Returns:
         data (list): The list of the ordered inputs
     '''
+    trip = f"{driver.license}{int(datetime.now().strftime("%m%d$Y%H%M%S"))}"
     date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
     data = [
         driver.name, 
@@ -148,7 +120,8 @@ def format(driver, time_span, max_speed, avg_speed, max_acc, avg_acc, min_dec):
         avg_acc,
         min_dec,
         driver.warnings,
-        driver.violations
+        driver.violations,
+        trip
     ]
     return data
 
@@ -164,15 +137,13 @@ def upload(data):
     '''
     connection = connect_aws_db()
     with connection.cursor() as cursor:
-        cursor.execute("INSERT INTO driving_record (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
+        cursor.execute("INSERT INTO driving_record (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
         connection.commit()
         connection.close()
 
-# Should add the option to upload the trip data from the local db
-# Create a new table and reference it in the main driving record table
 
 ##############################################################
-# Users Database
+# Users table
 ##############################################################
 def create_user_table():
     '''
@@ -185,7 +156,7 @@ def create_user_table():
         None
     '''
     connection = connect_aws_db()
-    create_users_query = """
+    create_users_query = '''
     CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(100) NOT NULL,
@@ -194,11 +165,91 @@ def create_user_table():
         license VARCHAR(100) NOT NULL,
         car_type VARCHAR(100) NOT NULL
     )
-    """
+    '''
     with connection.cursor() as cursor:
         cursor.execute(create_users_query)
         connection.commit()
         connection.close()
+
+##############################################################
+# Trip Tables
+##############################################################
+def create_trip(trip_name):
+    '''
+    Creates a new table in the aws database with all of the information from the local database
+    
+    Args:
+        trip_name (str): The name that is used to reference the table
+
+    Returns:
+        None
+    '''
+    connection = connect_aws_db()
+    with connection.cursor() as cursor:
+        query = f'''
+            INSERT INTO {trip_name}
+            SELECT * FROM [database].[trip]
+        '''
+        cursor.execute(query)
+
+def query_trip(trip_query):
+    '''
+    Returns list from the specified query
+
+    Args:
+        trip_query (str): The query that should be used (query and table should be included)
+    
+    Returns:
+        cursor.fetchall() (list): A list with the output from the query
+    '''
+    connection = connect_aws_db()
+    with connection.cursor() as cursor:
+        cursor.execute(trip_query)
+        return cursor.fetchall()
+
+
+##############################################################
+# Table Removal
+##############################################################
+def delete():
+    '''
+    Drops all tables from the database
+
+    Args:
+        None
+
+    Returns:
+        None
+    '''
+    connection = connect_aws_db()
+    with connection.cursor() as cursor:
+        cursor.execute("DROP TABLE IF EXISTS driving_record")
+        cursor.execute("DROP TABLE IF EXISTS users")
+
+def full_delete():
+    connection = connect_aws_db()
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT trip from driving_record")
+        trips = cursor.fetchall()
+        for trip in trips:
+            cursor.execute("DROP TABLE IF EXISTS %s", (trip[0],))
+    delete()
+
+def clear():
+    '''
+    Clears all of the data inside of the tables
+
+    Args:
+        None
+
+    Returns:
+        None
+    '''
+    connection = connect_aws_db()
+    with connection.cursor() as cursor:
+        cursor.execute("TRUNCATE TABLE IF EXISTS driving_record")
+        cursor.execute("TRUNCATE TABLE IF EXISTS users")
+
 
 if (__name__ == "__main__"):
     try:
@@ -206,5 +257,3 @@ if (__name__ == "__main__"):
         #connect_aws_db()
     except Error as e:
         print(e)
-
-
