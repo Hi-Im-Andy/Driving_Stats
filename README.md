@@ -53,6 +53,13 @@ Storing it locally allows for the program to run even if there is no connection 
 
 
 # Installs
+All of the packages can be installed at once using the requirements.txt file.
+
+To install all of the packages at once, use the following command:
+pip install -r requirements.txt
+
+More information on the packages is shown below:
+
 HERE
 pip install herepy
 
