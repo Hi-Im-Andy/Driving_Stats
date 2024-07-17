@@ -28,9 +28,9 @@ def create_aws_db():
     with connect(
         host = input("Host: "),
         user = input("User: "),
-        password = getpass("Password: "),
+        password = getpass("Password: ")
     ) as connection:
-        create_query = "CREATE DATABASE IF NOT EXISTS driving_stats"
+        create_query = "CREATE DATABASE IF NOT EXISTS driverdb"
         with connection.cursor() as cursor:
             cursor.execute(create_query)
 
@@ -48,7 +48,7 @@ def connect_aws_db():
         host = input("Host: "),
         user = input("User: "),
         password = getpass("Password: "),
-        database = "driving_stats"
+        database = "driverdbs"
     ) as connection:
         print(connection)
         return connection
@@ -107,8 +107,9 @@ def format(driver, time_span, max_speed, avg_speed, max_acc, avg_acc, min_dec):
     Returns:
         data (list): The list of the ordered inputs
     '''
-    trip = f"{driver.license}{int(datetime.now().strftime("%m%d$Y%H%M%S"))}"
+    # trip = f"{driver.license}{datetime.now().strftime("%m%d$Y%H%M%S")}"
     date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
+    trip = f"test{date}"
     data = [
         driver.name, 
         driver.license,
@@ -253,7 +254,7 @@ def clear():
 
 if (__name__ == "__main__"):
     try:
-        create_aws_db()
-        #connect_aws_db()
+        # create_aws_db()
+        connect_aws_db()
     except Error as e:
         print(e)

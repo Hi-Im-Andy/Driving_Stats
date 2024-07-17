@@ -225,4 +225,5 @@ def get_deceleration():
 
 
 if (__name__ == "__main__"):
-    set_speed(2,4,1)
+    # set_speed(2,4,1)
+    print_all()
