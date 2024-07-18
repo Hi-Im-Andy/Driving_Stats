@@ -153,6 +153,69 @@ def upload(con, data):
             cursor.execute("INSERT INTO driving_record (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
             connection.commit()
             connection.close()
+##############################################################
+# Get
+##############################################################
+def get_all(con):
+    '''
+    Gets all of the data from the driving_records table
+
+    Args:
+        con (dict): A dictionary with the host, user, password, and database that is used to connect to the database
+    
+    Returns:
+        cursor.fetchall() (list): All of the entries in the database
+    '''
+    with connect(
+        host = ["Host"],
+        user = con["User"],
+        password = con["Password"],
+        database = con["Database"]
+    ) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM driving_records")
+            return cursor.fetchall()
+
+def get_entry(con, entry):
+    '''
+    Gets a single entry from the driving_records table
+
+    Args:
+        con (dict): A dictionary with host, user, password, and database that is used to connect to the database
+        entry (str): The id of the entry which the information should be pulled from
+    '''
+    with connect(
+        host = con["Host"],
+        user = con["User"],
+        password = con["Password"],
+        database = con["Database"]
+    ) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM driving_records WHERE id = ?", (entry,))
+
+def get_trip(con, entry):
+    '''
+    Gets the trip from a specified data entry
+
+    Args:
+        con (dict): A dictionary with the host, user, password, and database that is used to connect to the database
+        entry (str): The entry in the driving_record table that should return the trip
+
+    Returns:
+        trip_id (str): The name of the trip that corresponds the the table for the trip
+    '''
+    query = "SELECT trip FROM driving_record WHERE id = ?"
+    with connect(
+        host = con["Host"],
+        user = con["User"],
+        password = con["Password"],
+        database = con["Database"]
+    ) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(query, (entry,))
+            trip_id = cursor.fetchone()[0]
+            connection.close()
+            return trip_id
 
 
 ##############################################################
@@ -237,6 +300,29 @@ def query_trip(con, trip_query):
     ) as connection:
         with connection.cursor() as cursor:
             cursor.execute(trip_query)
+            return cursor.fetchall()
+
+def pull_trip(con, trip):
+    '''
+    Used to pull a trip from the aws database
+
+    Args:
+        con (dict): A dictionary with the host, user, password, and database that is used to connect to the database
+        trip (str): The name of the trip that should be pulled from the database
+
+    Returns:
+        cursor.fetchall() (list): A list with information from the trip
+    '''
+    query = "SELECT * FROM ?"
+
+    with connect(
+        host = con["Host"],
+        user = con["User"],
+        password = con["Password"],
+        database = con["Database"]
+    ) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(query, (trip,))
             return cursor.fetchall()
 
 
