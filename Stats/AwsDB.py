@@ -30,10 +30,14 @@ def create_aws_db():
         user = input("User: "),
         password = getpass("Password: ")
     ) as connection:
+        # This can also be created in aws manually without needing to query.
         create_query = "CREATE DATABASE IF NOT EXISTS driverdb"
         with connection.cursor() as cursor:
             cursor.execute(create_query)
 
+
+# This function will most likely be replaced by a dictionary that gets passed
+# into other functions with the database information
 def connect_aws_db():
     '''
     Connects to the aws driving stats database
@@ -69,7 +73,6 @@ def create_driving_table():
         password = getpass("Password: "),
         database = "driverdb"
     ) as connection:
-    # connection = connect_aws_db()
         create_driving_record = '''
         CREATE TABLE IF NOT EXISTS driving_record (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -142,11 +145,16 @@ def upload(data):
     Returns:
         None
     '''
-    connection = connect_aws_db()
-    with connection.cursor() as cursor:
-        cursor.execute("INSERT INTO driving_record (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
-        connection.commit()
-        connection.close()
+    with connect(
+        host = input("Host: "),
+        user = input("User: "),
+        password = getpass("Password: "),
+        database = "driverdb"
+    ) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("INSERT INTO driving_record (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
+            connection.commit()
+            connection.close()
 
 
 ##############################################################
@@ -162,7 +170,6 @@ def create_user_table():
     Returns:
         None
     '''
-    connection = connect_aws_db()
     create_users_query = '''
     CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -173,10 +180,16 @@ def create_user_table():
         car_type VARCHAR(100) NOT NULL
     )
     '''
-    with connection.cursor() as cursor:
-        cursor.execute(create_users_query)
-        connection.commit()
-        connection.close()
+    with connect(
+        host = input("Host: "),
+        user = input("User: "),
+        password = getpass("Password: "),
+        database = "driverdb"
+    ) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(create_users_query)
+            connection.commit()
+            connection.close()
 
 ##############################################################
 # Trip Tables
@@ -191,13 +204,20 @@ def create_trip(trip_name):
     Returns:
         None
     '''
-    connection = connect_aws_db()
-    with connection.cursor() as cursor:
-        query = f'''
-            INSERT INTO {trip_name}
-            SELECT * FROM [database].[trip]
-        '''
-        cursor.execute(query)
+    with connect(
+        host = input("Host: "),
+        user = input("User: "),
+        password = getpass("Password: "),
+        database = "driverdb"
+    ) as connection:
+        with connection.cursor() as cursor:
+            query = f'''
+                INSERT INTO {trip_name}
+                SELECT * FROM [database].[trip]
+            '''
+            cursor.execute(query)
+            connection.commit()
+            connection.close()
 
 def query_trip(trip_query):
     '''
@@ -209,10 +229,15 @@ def query_trip(trip_query):
     Returns:
         cursor.fetchall() (list): A list with the output from the query
     '''
-    connection = connect_aws_db()
-    with connection.cursor() as cursor:
-        cursor.execute(trip_query)
-        return cursor.fetchall()
+    with connect(
+        host = input("Host: "),
+        user = input("User: "),
+        password = getpass("Password: "),
+        database = "driverdb"
+    ) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(trip_query)
+            return cursor.fetchall()
 
 
 ##############################################################
@@ -220,7 +245,7 @@ def query_trip(trip_query):
 ##############################################################
 def delete():
     '''
-    Drops all tables from the database
+    Drops only the driving_record and users tables from the database
 
     Args:
         None
@@ -234,12 +259,26 @@ def delete():
         cursor.execute("DROP TABLE IF EXISTS users")
 
 def full_delete():
-    connection = connect_aws_db()
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT trip from driving_record")
-        trips = cursor.fetchall()
-        for trip in trips:
-            cursor.execute("DROP TABLE IF EXISTS %s", (trip[0],))
+    '''
+    Drops all of the tables from the database
+
+    Args:
+        None
+    
+    Returns:
+        None
+    '''
+    with connect(
+        host = input("Host: "),
+        user = input("User: "),
+        password = getpass("Password: "),
+        database = "driverdb"
+    ) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT trip from driving_record")
+            trips = cursor.fetchall()
+            for trip in trips:
+                cursor.execute("DROP TABLE IF EXISTS %s", (trip[0],))
     delete()
 
 def clear():
@@ -252,13 +291,26 @@ def clear():
     Returns:
         None
     '''
-    connection = connect_aws_db()
-    with connection.cursor() as cursor:
-        cursor.execute("TRUNCATE TABLE IF EXISTS driving_record")
-        cursor.execute("TRUNCATE TABLE IF EXISTS users")
-
+    with connect(
+        host = input("Host: "),
+        user = input("User: "),
+        password = getpass("Password: "),
+        database = "driverdb"
+    ) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("TRUNCATE TABLE IF EXISTS driving_record")
+            cursor.execute("TRUNCATE TABLE IF EXISTS users")
+            
 def show():
+    '''
+    Shows all of the tables in the database
 
+    Args:
+        None
+
+    Returns:
+        None
+    '''
     with connect(
         host = input("Host: "),
         user = input("User: "),
