@@ -153,6 +153,8 @@ def upload(con, data):
             cursor.execute("INSERT INTO driving_record (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
             connection.commit()
             connection.close()
+
+            
 ##############################################################
 # Get
 ##############################################################

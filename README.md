@@ -52,6 +52,17 @@ The local database is a sqlite database that is used to store the most recent dr
 Storing it locally allows for the program to run even if there is no connection to the aws server. This database should be deleted after it is uploaded to the aws database to save space on the local device.
 
 
+# Running the Program
+When running the program, there are two main files. 
+1. The Main.py file is the file that is used to get data from either data base and show information based off of it.
+    * * This would be where data would be visualized.
+    * * If there was an app UI, this would be where the dashboard gets information from.
+
+2. The MainUpload.py file is used for the data aquisition, formatting, some of the analysis, and uploading.
+    * * First step is to collect the driving data like speed limite, position, time, and calcualte speed limit.
+    * * The next step is to analyze the data and get more information like acceleration, warnings, violations, etc.
+    * * The final step is to upload the data to the aws database as a summary and a duplicate table.
+
 # Installs
 All of the packages can be installed at once using the requirements.txt file.
 
