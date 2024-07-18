@@ -11,6 +11,8 @@ __author__ = "Andy Hernandez"
 __data__ = "06-30-2024"
 __status__ = "Development"
 
+# This entire file can be turned into a class similar to Driver.
+# However, this will be kept as is to show versitility without the use of classes.
 
 ##############################################################
 # Connection and creation of AWS table
@@ -35,43 +37,38 @@ def create_aws_db():
         with connection.cursor() as cursor:
             cursor.execute(create_query)
 
-
-# This function will most likely be replaced by a dictionary that gets passed
-# into other functions with the database information
 def connect_aws_db():
     '''
-    Connects to the aws driving stats database
+    Gets the information for the aws database from the user and returns it
 
     Args:
         None
 
     Returns:
-        Connection (var): The sql connection to the database
+        connect_dict (dict): A dictionary with the host, user, password, and database that is used to connect to the database 
     '''
-    with connect(
-        host = input("Host: "),
-        user = input("User: "),
-        password = getpass("Password: "),
-        database = "driverdb"
-    ) as connection:
-        print(connection)
-        return connection
+    host = input("Host: ")
+    user = input("User: ")
+    password = getpass("Password: ")
+    database = "driverdb"
+    connect_dict = {"Host" : host, "User" : user, "Password" : password, "Database" : database}
+    return connect_dict
     
-def create_driving_table():
+def create_driving_table(con):
     '''
     Creates a new table for the driving records for an aws database
 
     Args:
-        None
+        con (dict): A dictionary with the host, user, password, and database that is used to connect to the database
 
     Returns:
         None
     '''
     with connect(
-        host = input("Host: "),
-        user = input("User: "),
-        password = getpass("Password: "),
-        database = "driverdb"
+        host = con["Host"],
+        user = con["User"],
+        password = con["Password"],
+        database = con["Database"]
     ) as connection:
         create_driving_record = '''
         CREATE TABLE IF NOT EXISTS driving_record (
@@ -135,21 +132,22 @@ def format(driver, time_span, max_speed, avg_speed, max_acc, avg_acc, min_dec):
     ]
     return data
 
-def upload(data):
+def upload(con, data):
     '''
     Uploads the analyzed trip data to the aws database
 
     Args:
+        con (dict): A dictionary with the host, user, password, and database that is used to connect to the database
         data (list): The formatted inputs for the insert query
 
     Returns:
         None
     '''
     with connect(
-        host = input("Host: "),
-        user = input("User: "),
-        password = getpass("Password: "),
-        database = "driverdb"
+        host = con["Host"],
+        user = con["User"],
+        password = con["Password"],
+        database = con["Database"]
     ) as connection:
         with connection.cursor() as cursor:
             cursor.execute("INSERT INTO driving_record (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
@@ -160,12 +158,12 @@ def upload(data):
 ##############################################################
 # Users table
 ##############################################################
-def create_user_table():
+def create_user_table(con):
     '''
     Creates a new table for the user(s) in the aws database
     
     Args:
-        None
+        con (dict): A dictionary with the host, user, password, and database that is used to connect to the database
 
     Returns:
         None
@@ -181,10 +179,10 @@ def create_user_table():
     )
     '''
     with connect(
-        host = input("Host: "),
-        user = input("User: "),
-        password = getpass("Password: "),
-        database = "driverdb"
+        host = con["Host"],
+        user = con["User"],
+        password = con["Password"],
+        database = con["Database"]
     ) as connection:
         with connection.cursor() as cursor:
             cursor.execute(create_users_query)
@@ -194,21 +192,22 @@ def create_user_table():
 ##############################################################
 # Trip Tables
 ##############################################################
-def create_trip(trip_name):
+def create_trip(con, trip_name):
     '''
     Creates a new table in the aws database with all of the information from the local database
     
     Args:
+        con (dict): A dictionary with the host, user, password, and database that is used to connect to the database
         trip_name (str): The name that is used to reference the table
 
     Returns:
         None
     '''
     with connect(
-        host = input("Host: "),
-        user = input("User: "),
-        password = getpass("Password: "),
-        database = "driverdb"
+        host = con["Host"],
+        user = con["User"],
+        password = con["Password"],
+        database = con["Database"]
     ) as connection:
         with connection.cursor() as cursor:
             query = f'''
@@ -219,21 +218,22 @@ def create_trip(trip_name):
             connection.commit()
             connection.close()
 
-def query_trip(trip_query):
+def query_trip(con, trip_query):
     '''
     Returns list from the specified query
 
     Args:
+        con (dict): A dictionary with the host, user, password, and database that is used to connect to the database
         trip_query (str): The query that should be used (query and table should be included)
     
     Returns:
         cursor.fetchall() (list): A list with the output from the query
     '''
     with connect(
-        host = input("Host: "),
-        user = input("User: "),
-        password = getpass("Password: "),
-        database = "driverdb"
+        host = con["Host"],
+        user = con["User"],
+        password = con["Password"],
+        database = con["Database"]
     ) as connection:
         with connection.cursor() as cursor:
             cursor.execute(trip_query)
@@ -243,79 +243,84 @@ def query_trip(trip_query):
 ##############################################################
 # Table Removal
 ##############################################################
-def delete():
+def delete(con):
     '''
     Drops only the driving_record and users tables from the database
 
     Args:
-        None
+        con (dict): A dictionary with the host, user, password, and database that is used to connect to the database
 
     Returns:
         None
     '''
-    connection = connect_aws_db()
-    with connection.cursor() as cursor:
-        cursor.execute("DROP TABLE IF EXISTS driving_record")
-        cursor.execute("DROP TABLE IF EXISTS users")
+    with connect(
+        host = con["Host"],
+        user = con["User"],
+        password = con["Password"],
+        database = con["Database"]
+    ) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("DROP TABLE IF EXISTS driving_record")
+            cursor.execute("DROP TABLE IF EXISTS users")
 
-def full_delete():
+def full_delete(con):
     '''
     Drops all of the tables from the database
 
     Args:
-        None
+       con (dict): A dictionary with the host, user, password, and database that is used to connect to the database
     
     Returns:
         None
     '''
     with connect(
-        host = input("Host: "),
-        user = input("User: "),
-        password = getpass("Password: "),
-        database = "driverdb"
+        host = con["Host"],
+        user = con["User"],
+        password = con["Password"],
+        database = con["Database"]
     ) as connection:
         with connection.cursor() as cursor:
             cursor.execute("SELECT trip from driving_record")
             trips = cursor.fetchall()
             for trip in trips:
                 cursor.execute("DROP TABLE IF EXISTS %s", (trip[0],))
-    delete()
+    delete(con)
 
-def clear():
+def clear(con):
     '''
     Clears all of the data inside of the tables
 
     Args:
-        None
+        con (dict): A dictionary with the host, user, password, and database that is used to connect to the database
 
     Returns:
         None
     '''
     with connect(
-        host = input("Host: "),
-        user = input("User: "),
-        password = getpass("Password: "),
-        database = "driverdb"
+        host = con["Host"],
+        user = con["User"],
+        password = con["Password"],
+        database = con["Database"]
     ) as connection:
         with connection.cursor() as cursor:
             cursor.execute("TRUNCATE TABLE IF EXISTS driving_record")
             cursor.execute("TRUNCATE TABLE IF EXISTS users")
             
-def show():
+def show(con):
     '''
     Shows all of the tables in the database
 
     Args:
-        None
+        con (dict): A dictionary with the host, user, password, and database that is used to connect to the database
 
     Returns:
         None
     '''
     with connect(
-        host = input("Host: "),
-        user = input("User: "),
-        password = getpass("Password: "),
-        database = "driverdb"
+        host = con["Host"],
+        user = con["User"],
+        password = con["Password"],
+        database = con["Database"]
     ) as connection:
         query = "SHOW TABLES"
         with connection.cursor() as cursor:
@@ -327,9 +332,10 @@ def show():
 
 if (__name__ == "__main__"):
     try:
-        # create_aws_db()
-        # connect_aws_db()
-        # create_driving_table()
-        show()
+        con = connect_aws_db()
+        # create_aws_db(con)
+        # connect_aws_db(con)
+        # create_driving_table(con)
+        show(con)
     except Error as e:
         print(e)
