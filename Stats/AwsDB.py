@@ -48,7 +48,7 @@ def connect_aws_db():
         host = input("Host: "),
         user = input("User: "),
         password = getpass("Password: "),
-        database = "driverdbs"
+        database = "driverdb"
     ) as connection:
         print(connection)
         return connection
@@ -63,29 +63,35 @@ def create_driving_table():
     Returns:
         None
     '''
-    connection = connect_aws_db()
-    create_driving_record = '''
-    CREATE TABLE IF NOT EXISTS driving_record (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        driver VARCHAR(100),
-        license VARCHAR(100),
-        date DATE,
-        time_span TIME,
-        max_speed FLOAT,
-        average_speed FLOAT,
-        max_acceleration FLOAT,
-        average_acceleration FLOAT,
-        Min_deceleration Float,
-        average_deceleration FLOAT,
-        warnings INT,
-        violations INT,
-        trip VARCHAR(100)
-    )
-    '''
-    with connection.cursor() as cursor:
-        cursor.execute(create_driving_record)
-        connection.commit()
-        connection.close()
+    with connect(
+        host = input("Host: "),
+        user = input("User: "),
+        password = getpass("Password: "),
+        database = "driverdb"
+    ) as connection:
+    # connection = connect_aws_db()
+        create_driving_record = '''
+        CREATE TABLE IF NOT EXISTS driving_record (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            driver VARCHAR(100),
+            license VARCHAR(100),
+            date DATE,
+            time_span TIME,
+            max_speed FLOAT,
+            average_speed FLOAT,
+            max_acceleration FLOAT,
+            average_acceleration FLOAT,
+            Min_deceleration Float,
+            average_deceleration FLOAT,
+            warnings INT,
+            violations INT,
+            trip VARCHAR(100)
+        )
+        '''
+        with connection.cursor() as cursor:
+            cursor.execute(create_driving_record)
+            connection.commit()
+            connection.close()
 
 
 ##############################################################
@@ -251,10 +257,27 @@ def clear():
         cursor.execute("TRUNCATE TABLE IF EXISTS driving_record")
         cursor.execute("TRUNCATE TABLE IF EXISTS users")
 
+def show():
+
+    with connect(
+        host = input("Host: "),
+        user = input("User: "),
+        password = getpass("Password: "),
+        database = "driverdb"
+    ) as connection:
+        query = "SHOW TABLES"
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+            print(cursor.fetchall())
+            connection.commit()
+            connection.close()
+
 
 if (__name__ == "__main__"):
     try:
         # create_aws_db()
-        connect_aws_db()
+        # connect_aws_db()
+        # create_driving_table()
+        show()
     except Error as e:
         print(e)
