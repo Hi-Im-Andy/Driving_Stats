@@ -74,3 +74,50 @@
 13/07/2024 17:47:22: INFO     Starting data collection
 13/07/2024 17:47:31: INFO     Gathering data for driver John Smith
 13/07/2024 17:47:34: ERROR    Error occured during main upload: 'dict' object has no attribute 'encode'
+18/07/2024 17:40:46: INFO     Starting data collection
+18/07/2024 17:40:57: INFO     Gathering data for driver John Smith
+18/07/2024 17:42:56: INFO     Finished gathering data from the driver.
+18/07/2024 17:42:56: INFO     Starting upload to AWS.
+18/07/2024 17:42:56: ERROR    Error occured during main upload: 'bool' object is not iterable
+18/07/2024 17:43:57: INFO     Starting data collection
+18/07/2024 17:44:01: INFO     Starting upload to AWS.
+18/07/2024 17:45:07: INFO     Starting data collection
+18/07/2024 17:45:09: INFO     Starting upload to AWS.
+18/07/2024 17:45:50: INFO     Starting data collection
+18/07/2024 17:45:54: INFO     Starting upload to AWS.
+18/07/2024 21:12:47: INFO     Starting data collection
+18/07/2024 21:12:50: INFO     Starting upload to AWS.
+18/07/2024 21:14:38: INFO     Starting data collection
+18/07/2024 21:14:40: INFO     Starting upload to AWS.
+18/07/2024 21:16:01: INFO     Starting data collection
+18/07/2024 21:16:04: INFO     Starting upload to AWS.
+18/07/2024 21:16:24: INFO     Starting data collection
+18/07/2024 21:16:26: INFO     Starting upload to AWS.
+18/07/2024 21:16:45: INFO     Starting data collection
+18/07/2024 21:16:46: INFO     Starting upload to AWS.
+18/07/2024 21:18:54: INFO     Starting data collection
+18/07/2024 21:18:57: INFO     Gathering data for driver John Smith
+18/07/2024 21:20:57: INFO     Finished gathering data from the driver.
+18/07/2024 21:20:57: INFO     Starting upload to AWS.
+18/07/2024 21:22:34: INFO     Starting data collection
+18/07/2024 21:22:37: INFO     Gathering data for driver John Smith
+18/07/2024 21:24:34: INFO     Finished gathering data from the driver.
+18/07/2024 21:24:34: INFO     Starting upload to AWS.
+18/07/2024 21:31:48: INFO     Starting data collection
+18/07/2024 21:33:15: INFO     Gathering data for driver John Smith
+18/07/2024 21:35:19: INFO     Finished gathering data from the driver.
+18/07/2024 21:35:19: INFO     Starting upload to AWS.
+18/07/2024 21:44:28: INFO     Starting data collection
+18/07/2024 21:44:30: INFO     Gathering data for driver John Smith
+18/07/2024 21:46:44: INFO     Finished gathering data from the driver.
+18/07/2024 21:46:44: INFO     Starting upload to AWS.
+18/07/2024 21:55:22: INFO     Starting data collection
+18/07/2024 21:55:36: INFO     Gathering data for driver John Smith
+18/07/2024 21:57:33: INFO     Finished gathering data from the driver.
+18/07/2024 21:57:33: INFO     Starting upload to AWS.
+18/07/2024 22:08:15: INFO     Starting data collection
+18/07/2024 22:08:22: INFO     Gathering data for driver John Smith
+18/07/2024 22:10:11: INFO     Finished gathering data from the driver.
+18/07/2024 22:10:11: INFO     Starting upload to AWS.
+18/07/2024 22:13:05: INFO     Starting data collection
+18/07/2024 22:13:09: INFO     Gathering data for driver John Smith
