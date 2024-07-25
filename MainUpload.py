@@ -39,9 +39,6 @@ def upload_to_aws(driver):
     max_speed = Analysis.max_speed()
     max_acc = Analysis.max_acceleration()
     min_dec = Analysis.min_deceleration()
-    
-    warnings = Analysis.warnings()
-    violations = Analysis.violations()
 
     # Format
     data = adb.format(
@@ -52,13 +49,12 @@ def upload_to_aws(driver):
         max_acc, 
         avg_acc, 
         min_dec, 
-        avg_dec, 
-        warnings, 
-        violations
+        avg_dec
     )
 
     # Upload to aws
-    adb.upload(data)
+    con = adb.connect_aws_db()
+    adb.upload(con, data)
     LOGGER.info("Upload to AWS complete.")
 
 def run(driver):
@@ -89,7 +85,8 @@ def run(driver):
         speed = ldb.set_speed(driver, 1)
         acceleration = ldb.set_acceleration(driver, interval)
         longitude, latitude = driver.get_location()
-        data = ldb.format(latitude, longitude, driver.get_speed_limit(), speed, acceleration)
+        data = ldb.format(latitude, longitude, 0, speed, acceleration)
+        # data = ldb.format(latitude, longitude, driver.get_speed_limit(), speed, acceleration)
         ldb.upload(data)
         time.sleep(interval)
     LOGGER.info("Finished gathering data from the driver.")
@@ -112,16 +109,20 @@ def main():
     license = "Y123456"
     driver = Driver(driver, 30, "Male", license, "SUV")
     driver.set_api_key()
-    
-    try:
-        ldb.create_database()
-        run(driver)
-        upload_to_aws(driver)
-        ldb.print_all()
-        ldb.delete()
-    except Exception as e:
-        LOGGER.error(f"Error occured during main upload: {e}")
-        sys.exit(f"Error occured during main upload: {e}")
+    ldb.delete()
+    ldb.create_database()
+    run(driver)
+    upload_to_aws(driver)
+
+    # try:
+        # ldb.create_database()
+        # run(driver)
+        # upload_to_aws(driver)
+        # ldb.print_all()
+        # ldb.delete()
+    # except Exception as e:
+        # LOGGER.error(f"Error occured during main upload: {e}")
+        # sys.exit(f"Error occured during main upload: {e}")
 
 if (__name__ == "__main__"):
     main()

@@ -105,7 +105,7 @@ def avg_deceleration():
     '''
     dec_tup = localDB.get_acceleration()
     dec = [value[0] for value in dec_tup]
-    dec = [value for value in dec != 0]
+    dec = [value for value in dec if value != 0]
     avg_dec = float(sum(dec) / len(dec))
     return avg_dec
 

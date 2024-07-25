@@ -5,7 +5,7 @@
 from mysql.connector import connect, Error
 from getpass import getpass
 from datetime import datetime
-import LocalDB as ldb
+# import LocalDB as ldb
 
 __author__ = "Andy Hernandez"
 __data__ = "06-30-2024"
@@ -97,7 +97,7 @@ def create_driving_table(con):
 ##############################################################
 # Uploads
 ##############################################################
-def format(driver, time_span, max_speed, avg_speed, max_acc, avg_acc, min_dec):
+def format(driver, time_span, max_speed, avg_speed, max_acc, avg_acc, min_dec, avg_dec):
     '''
     Places all of the input arguments into a list to prepare them for the query
 
@@ -126,6 +126,7 @@ def format(driver, time_span, max_speed, avg_speed, max_acc, avg_acc, min_dec):
         max_acc,
         avg_acc,
         min_dec,
+        avg_dec,
         driver.warnings,
         driver.violations,
         trip
@@ -150,7 +151,8 @@ def upload(con, data):
         database = con["Database"]
     ) as connection:
         with connection.cursor() as cursor:
-            cursor.execute("INSERT INTO driving_record (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
+            cursor.execute("INSERT INTO driving_record (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", data)
+            # cursor.execute("INSERT INTO driving_record (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
             connection.commit()
             connection.close()
 
